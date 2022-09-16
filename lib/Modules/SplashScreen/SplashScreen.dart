@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
         decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/images/background.png'))),
-        child: Center(child: Image(image: const AssetImage('assets/images/splash.png'),height: Helper.getScreenHeight(context: context)*0.3)),
+        child: Center(child: Image(image: const AssetImage('assets/images/logo.png'),height: Helper.getScreenHeight(context: context)*0.3)),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_delivery/Modules/HomeScreen/HomeScreen.dart';
@@ -11,10 +12,16 @@ import 'package:get/get.dart';
 import 'Modules/OnBoardingScreen/OnBoardingScreen.dart';
 import 'Shared/BlocObserver/BlocObserver.dart';
 import 'Shared/Network/Local/CacheHelper.dart';
+import 'firebase_options.dart';
 
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // sta
