@@ -187,8 +187,11 @@ Widget textFormFieldWithHint({
     style: TextStyle(
         color: mainColor
     ),
+    onChanged: (value){
+      print(value);
+    },
     decoration: InputDecoration(
-        fillColor: Colors.white,
+        fillColor: Colors.transparent,
         filled: true,
         hintText: label,
         hintStyle: style,

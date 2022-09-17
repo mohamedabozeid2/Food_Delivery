@@ -2,8 +2,12 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/Modules/HomeScreen/HomeScreen.dart';
+import 'package:food_delivery/Modules/LoginScreen/LoginCubit/LoginCubit.dart';
 import 'package:food_delivery/Modules/LoginScreen/LoginScreen.dart';
+import 'package:food_delivery/Modules/MapScreen/MapScreen.dart';
+import 'package:food_delivery/Modules/MapScreen/cubit/MapCubit.dart';
 import 'package:food_delivery/Modules/Otp/Otp.dart';
 import 'package:food_delivery/Modules/SplashScreen/SplashScreen.dart';
 import 'package:food_delivery/Shared/Constants/Constants.dart';
@@ -62,12 +66,18 @@ class MyApp extends StatelessWidget {
   MyApp({required this.startWidget});
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Food Delivery',
-      theme: lightTheme,
-      themeMode: ThemeMode.light,
-      home: startWidget,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context)=> MapCubit()),
+        BlocProvider(create: (context)=> FoodLoginCubit())
+      ],
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Food Delivery',
+        theme: lightTheme,
+        themeMode: ThemeMode.light,
+        home: MapSample(),
+      ),
     );
   }
 }
