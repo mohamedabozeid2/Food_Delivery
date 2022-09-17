@@ -1,7 +1,7 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/Modules/Otp/Otp.dart';
+import 'package:get/get.dart';
 
 import '../../Shared/Components/Components.dart';
 import '../../Shared/styles/Themes.dart';
@@ -15,10 +15,18 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context)=> FoodLoginCubit(),
+      create: (BuildContext context) => FoodLoginCubit(),
       child: BlocConsumer<FoodLoginCubit, FoodLoginStates>(
-        listener: (context, state){},
-        builder: (context, state){
+        listener: (context, state) {
+          if (state is FoodVerifyPhoneSuccessState) {
+            navigateAndFinish(
+                context: context,
+                widget: OtpScreen());
+          }else if(state is FoodVerifyPhoneErrorState){
+            Get.snackbar('Food Delivery', state.error);
+          }
+        },
+        builder: (context, state) {
           return Scaffold(
             body: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -28,10 +36,7 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   Align(
                     alignment: Alignment.center,
-                    child: Image(
-                      image: AssetImage('assets/images/logo.png'),
-                      height: Helper.getScreenHeight(context: context) * 0.28,
-                    ),
+                    child: logoDisplay(context: context)
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -57,18 +62,20 @@ class LoginScreen extends StatelessWidget {
                     child: textFormFieldWithHint(
                       context: context,
                       controller: phoneController,
-                      label: 'Mobile Number',
+                      label: ' Mobile Number',
                       type: TextInputType.phone,
+                      prefixWidget: Text('+20'),
                       prefixIcon: Icon(Icons.phone, color: mainColor),
                     ),
                   ),
                   const SizedBox(
                     height: 25.0,
                   ),
-                  defaultButton(
+                  state is FoodVerifyPhoneLoadingState ? const Center(child: CircularProgressIndicator()) :defaultButton(
                       text: 'Log in',
                       fun: () {
-                        FoodLoginCubit.get(context).phoneAuthentication(phoneNumber: phoneController.text);
+                        FoodLoginCubit.get(context).phoneAuthentication(
+                            phoneNumber: phoneController.text);
                       },
                       height: 50.0,
                       TextColor: Colors.white,

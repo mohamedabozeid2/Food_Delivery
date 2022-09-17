@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_delivery/Modules/HomeScreen/HomeScreen.dart';
 import 'package:food_delivery/Modules/LoginScreen/LoginScreen.dart';
+import 'package:food_delivery/Modules/Otp/Otp.dart';
 import 'package:food_delivery/Modules/SplashScreen/SplashScreen.dart';
 import 'package:food_delivery/Shared/Constants/Constants.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';

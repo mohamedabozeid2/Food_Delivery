@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 
+import '../../utils/helper.dart';
+
 Widget myDivider(
     {required Color color,
       double paddingVertical = 8.0,
@@ -166,6 +168,7 @@ Widget textFormFieldWithHint({
   required TextInputType type,
   TextStyle? style,
   Widget? prefixIcon,
+  Widget? prefixWidget,
   Color borderColor = Colors.white,
   double? paddingInside,
   IconData? suffixIcon,
@@ -189,6 +192,7 @@ Widget textFormFieldWithHint({
         filled: true,
         hintText: label,
         hintStyle: style,
+        prefix: prefixWidget,
         prefixIcon: Padding(
           padding: const EdgeInsets.all(8.0),
           child: prefixIcon ?? prefixIcon,
@@ -224,6 +228,12 @@ Widget textFormFieldWithHint({
   );
 }
 
+Widget logoDisplay({required BuildContext context}){
+  return Image(
+    image: AssetImage('assets/images/logo.png'),
+    height: Helper.getScreenHeight(context: context) * 0.28,
+  );
+}
 
 Widget buttonBuilder({
   required fun,
