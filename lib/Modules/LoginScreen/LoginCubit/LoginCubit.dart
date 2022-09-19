@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
+import 'package:food_delivery/Shared/Network/Local/CacheHelper.dart';
 import 'package:get/get.dart';
 import '../../../Shared/Constants/Constants.dart';
 import 'LoginStates.dart';
@@ -10,10 +12,12 @@ class FoodLoginCubit extends Cubit<FoodLoginStates> {
 
   static FoodLoginCubit get(context) => BlocProvider.of(context);
 
-  void phoneAuthentication({
+  String? verificationCode;
+
+  void sendPhoneAuthenticationCode({
     required String phoneNumber,
   }) async {
-    emit(FoodVerifyPhoneLoadingState());
+    emit(FoodSendPhoneAuthenticationLoadingState());
     await FirebaseAuth.instance
         .verifyPhoneNumber(
             phoneNumber: '+20$phoneNumber}',
@@ -23,17 +27,14 @@ class FoodLoginCubit extends Cubit<FoodLoginStates> {
               //   print(value.credential!.providerId);
               //   print(value.credential!.signInMethod);
               //   print(value.credential!.token);
-              //   if(value.user!=null){
               //     print('user logged in');
               //   }
               // }).catchError((error){
               //   print('NEWWW ERROR ===> ${error.toString()}');
               // });
             },
-
             verificationFailed: (FirebaseAuthException e) {
-              showToast(msg: '${e.message}');
-              print('=>>>> ${e.message}');
+              Get.snackbar('Food Delivery', '${e.message}');
             },
             codeSent: (String verificationId, int? resendToken) {
               verificationCode = verificationId;
@@ -43,11 +44,30 @@ class FoodLoginCubit extends Cubit<FoodLoginStates> {
             },
             timeout: const Duration(seconds: 60))
         .then((value) {
+      emit(FoodSendPhoneAuthenticationSuccessState());
+    }).catchError((error) {
+      print('error in verify phone ===> ${error.toString()}');
+      emit(FoodSendPhoneAuthenticationErrorState(error: error.toString()));
+    });
+  }
+
+  void phoneAuthentication({required String pin}){
+    emit(FoodVerifyPhoneLoadingState());
+    FirebaseAuth.instance
+        .signInWithCredential(PhoneAuthProvider.credential(
+        verificationId: verificationCode!, smsCode: pin))
+        .then((value) {
+      Get.snackbar('Food Delivery', 'Done',
+          colorText: Colors.white, backgroundColor: Colors.green);
+      loggedIn = true;
+      CacheHelper.saveData(key: 'loggedIn', value: true);
       emit(FoodVerifyPhoneSuccessState());
     }).catchError((error) {
-      print(verificationCode);
-      print('error in verify phone ===> ${error.toString()}');
+      print(error.toString());
+      Get.snackbar('Food Delivery', 'Wrong Code',
+          backgroundColor: Colors.red, colorText: Colors.white);
       emit(FoodVerifyPhoneErrorState(error: error.toString()));
+
     });
   }
 }

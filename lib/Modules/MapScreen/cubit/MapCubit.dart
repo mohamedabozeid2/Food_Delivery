@@ -7,8 +7,9 @@ class MapCubit extends Cubit<MapStates> {
   MapCubit() : super(MapInitialState());
 
   static MapCubit get(context) => BlocProvider.of(context);
-
+  String url3 = 'http://mvs.bslmeiyu.com/api/v1/config/place-api-autocomplete?search_text=cairo';
   String ApiKey = 'AIzaSyAkUy7okwe-hJiu_a8bqv1wLczFkymrc9Q';
+  // https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJ674hC6Y_WBQRujtC6Jay33k&key=AIzaSyAkUy7okwe-hJiu_a8bqv1wLczFkymrc9Q
   String url ='https://maps.googleapis.com/maps/api/place//findplacefromtext/json?input=alexandria&inputtype=textquery&key=AIzaSyAkUy7okwe-hJiu_a8bqv1wLczFkymrc9Q';
   String url2 ='https://maps.googleapis.com/maps/api/js?key=AIzaSyAkUy7okwe-hJiu_a8bqv1wLczFkymrc9Q&libraries=places&callback=initMap';
 
@@ -69,8 +70,8 @@ class MapCubit extends Cubit<MapStates> {
     return serviceEnabled;
   }
 
-
-  Future<String> getPlaceId(String input)async{
-    final String url = '';
-  }
+  //
+  // Future<String> getPlaceId(String input)async{
+  //   final String url = '';
+  // }
 }

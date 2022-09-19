@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery/Modules/HomeScreen/HomeScreen.dart';
+import 'package:food_delivery/Modules/LoginScreen/LoginScreen.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 import 'package:food_delivery/utils/helper.dart';
@@ -63,7 +63,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       )),
                   onTap: () {
                     navigateAndFinish(
-                        context: context, widget: HomeScreen());
+                        context: context, widget: LoginScreen());
                     CacheHelper.saveData(key: 'onBoarding', value: true);
                   },
                 )
@@ -108,7 +108,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   fun: () {
                     if (isLast == true) {
                       navigateAndFinish(
-                          context: context, widget: HomeScreen());
+                          context: context, widget: LoginScreen());
                       CacheHelper.saveData(key: 'onBoarding', value: true);
 
                     } else {

@@ -6,8 +6,9 @@ class DioHelper{
   static init(){
     dio=Dio(
         BaseOptions(
-          baseUrl: 'https://fcm.googleapis.com/fcm/',
+          baseUrl: 'http://mvs.bslmeiyu.com/api/',
           receiveDataWhenStatusError: true,
+          connectTimeout: 5000,
         )
     );
   }

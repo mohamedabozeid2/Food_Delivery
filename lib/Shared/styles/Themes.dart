@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-var mainColor = Color(0xffFC6011);
+Color mainColor = Color(0xffFC6011);
+Color inActiveColor = Color(0xff707070);
 
 // ThemeData darkTheme = ThemeData(
 //   primarySwatch: defaultBlueColor,
