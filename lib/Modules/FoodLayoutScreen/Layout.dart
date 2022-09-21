@@ -10,56 +10,104 @@ import 'Cubit/FoodLayoutCubit.dart';
 import 'Cubit/FoodLayoutStates.dart';
 import 'Widgets/SearchBar.dart';
 
-class LayoutScreen extends StatelessWidget {
+class LayoutScreen extends StatefulWidget {
   const LayoutScreen({Key? key}) : super(key: key);
 
+  @override
+  State<LayoutScreen> createState() => _LayoutScreenState();
+}
+
+class _LayoutScreenState extends State<LayoutScreen> {
+  @override
+  void initState() {
+    FoodLayoutCubit.get(context).getRestaurants();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<FoodLayoutCubit, FoodLayoutStates>(
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-          body: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                toolbarHeight: Helper.getScreenHeight(context: context) * 0.2,
-                title: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Text(
-                            'Delivery to',
-                            style:
-                                Theme.of(context).textTheme.subtitle2!.copyWith(
-                                      fontSize: 13.0,
-                                    ),
-                          ),
-                          const SizedBox(
-                            height: 15.0,
-                          ),
-                          Text(
-                            'Alexandria',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2!
-                                .copyWith(fontSize: 17.0),
-                          ),
-                          const SizedBox(
-                            height: 15.0,
-                          ),
-                          SearchBar(),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                        ],
+          appBar: AppBar(
+            toolbarHeight: Helper.getScreenHeight(context: context) * 0.2,
+            title: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Delivery to',
+                        style:
+                        Theme.of(context).textTheme.subtitle2!.copyWith(
+                          fontSize: 13.0,
+                        ),
                       ),
-                    )
-                  ],
-                ),
-              ),
+                      const SizedBox(
+                        height: 15.0,
+                      ),
+                      Text(
+                        'Alexandria',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2!
+                            .copyWith(fontSize: 17.0),
+                      ),
+                      const SizedBox(
+                        height: 15.0,
+                      ),
+                      SearchBar(),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          body: state is FoodLayoutGetRestaurantsLoadingState ? const Center(child: CircularProgressIndicator()): CustomScrollView(
+            slivers: [
+              // SliverAppBar(
+              //
+              //   toolbarHeight: Helper.getScreenHeight(context: context) * 0.2,
+              //   title: Row(
+              //     children: [
+              //       Expanded(
+              //         child: Column(
+              //           children: [
+              //             Text(
+              //               'Delivery to',
+              //               style:
+              //                   Theme.of(context).textTheme.subtitle2!.copyWith(
+              //                         fontSize: 13.0,
+              //                       ),
+              //             ),
+              //             const SizedBox(
+              //               height: 15.0,
+              //             ),
+              //             Text(
+              //               'Alexandria',
+              //               style: Theme.of(context)
+              //                   .textTheme
+              //                   .bodyText2!
+              //                   .copyWith(fontSize: 17.0),
+              //             ),
+              //             const SizedBox(
+              //               height: 15.0,
+              //             ),
+              //             SearchBar(),
+              //             const SizedBox(
+              //               height: 10.0,
+              //             ),
+              //           ],
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
               SliverFillRemaining(
-                  fillOverscroll: false,
+                  fillOverscroll: true,
                   child: FoodLayoutCubit.get(context)
                       .screens[FoodLayoutCubit.get(context).currentIndex])
             ],
@@ -79,6 +127,8 @@ class LayoutScreen extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             shape: const CircularNotchedRectangle(),
             child: BottomNavigationBar(
+              selectedItemColor: mainColor,
+              selectedIconTheme: IconThemeData(color: mainColor),
               type: BottomNavigationBarType.fixed,
               currentIndex: FoodLayoutCubit.get(context).currentIndex,
               onTap: (index) {

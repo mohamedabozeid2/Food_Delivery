@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:food_delivery/Modules/OnBoardingScreen/OnBoardingScreen.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/utils/helper.dart';
@@ -22,12 +23,17 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/background.png'))),
-        child: Center(child: Image(image: const AssetImage('assets/images/logo.png'),height: Helper.getScreenHeight(context: context)*0.3)),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
+      child: Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/background.png'))),
+          child: Center(child: Image(image: const AssetImage('assets/images/logo.png'),height: Helper.getScreenHeight(context: context)*0.3)),
+        ),
       ),
     );
   }

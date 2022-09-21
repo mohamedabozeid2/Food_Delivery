@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 Color mainColor = Color(0xffFC6011);
 Color inActiveColor = Color(0xff707070);
+Color greyTextColor = Color(0xff8E8E93);
 
 // ThemeData darkTheme = ThemeData(
 //   primarySwatch: defaultBlueColor,
@@ -63,6 +64,7 @@ ThemeData lightTheme = ThemeData(
   // floatingActionButtonTheme:
   // FloatingActionButtonThemeData(backgroundColor: defaultColor),
   scaffoldBackgroundColor: Colors.white,
+
   appBarTheme: const AppBarTheme(
     iconTheme: IconThemeData(color: Colors.white),
     actionsIconTheme: IconThemeData(color: Colors.white),
@@ -75,7 +77,7 @@ ThemeData lightTheme = ThemeData(
     elevation: 0.0,
     backgroundColor: Colors.transparent,
     systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
+        statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.dark
     ),
