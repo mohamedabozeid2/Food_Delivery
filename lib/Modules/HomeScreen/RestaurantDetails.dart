@@ -1,20 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/Models/MealModel.dart';
 import 'package:food_delivery/Models/RestaurantModel.dart';
 import 'package:food_delivery/Modules/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
 import 'package:food_delivery/Modules/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
+import 'package:food_delivery/Modules/HomeScreen/MealDetails.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/utils/helper.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../Models/TagsModel.dart';
 import '../../Shared/styles/Themes.dart';
 
-class RestaurantDetails extends StatelessWidget {
+class RestaurantDetails extends StatefulWidget {
   RestaurantModel model;
   List<TagsModel> tagsModel;
+  int? restaurantIndex;
 
-  RestaurantDetails({required this.model, required this.tagsModel});
+  RestaurantDetails(
+      {required this.model,
+      required this.tagsModel,
+      required this.restaurantIndex});
+
+  @override
+  State<RestaurantDetails> createState() => _RestaurantDetailsState();
+}
+
+class _RestaurantDetailsState extends State<RestaurantDetails> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +62,8 @@ class RestaurantDetails extends StatelessWidget {
                             width: double.infinity,
                             height:
                                 Helper.getScreenHeight(context: context) * 0.3,
-                            child: Image.network(
-                                'https://img.freepik.com/free-photo/kebab-platter-with-tikka-lula-chicken-vegetable-kebabs_140725-256.jpg?w=900&t=st=1663686835~exp=1663687435~hmac=25ac88ffa3ef72a1823a85f2a19793488020136c18f3649ac2540da2fd380d5e'),
+                            child: Image.network(widget.model.backgroundImage!,
+                                fit: BoxFit.cover),
                           ),
                         ),
                         Container(
@@ -55,7 +72,8 @@ class RestaurantDetails extends StatelessWidget {
                           decoration: BoxDecoration(
                               color: Colors.green,
                               borderRadius: BorderRadius.circular(10.0)),
-                          child: Image(image: NetworkImage(model.image!)),
+                          child:
+                              Image(image: NetworkImage(widget.model.image!)),
                         )
                       ],
                     ),
@@ -68,7 +86,7 @@ class RestaurantDetails extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              model.name!,
+                              widget.model.name!,
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
                             const Spacer(),
@@ -81,7 +99,7 @@ class RestaurantDetails extends StatelessWidget {
                               width: 5.0,
                             ),
                             Text(
-                              model.rate.toString(),
+                              widget.model.rate.toString(),
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle2!
@@ -106,7 +124,7 @@ class RestaurantDetails extends StatelessWidget {
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
                                       return Text(
-                                        tagsModel[index].tag!,
+                                        widget.tagsModel[index].tag!,
                                         style: Theme.of(context)
                                             .textTheme
                                             .subtitle2!
@@ -118,7 +136,7 @@ class RestaurantDetails extends StatelessWidget {
                                         width: 10,
                                       );
                                     },
-                                    itemCount: tagsModel.length),
+                                    itemCount: widget.tagsModel.length),
                               ),
                             ],
                           ),
@@ -140,7 +158,7 @@ class RestaurantDetails extends StatelessWidget {
                                     width: 5.0,
                                   ),
                                   Text(
-                                    model.location!,
+                                    widget.model.location!,
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle2!
@@ -162,7 +180,7 @@ class RestaurantDetails extends StatelessWidget {
                                     width: 5.0,
                                   ),
                                   Text(
-                                    model.rate.toString(),
+                                    widget.model.rate.toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle2!
@@ -277,7 +295,7 @@ class RestaurantDetails extends StatelessWidget {
                                                 ),
                                                 Expanded(
                                                   child: Text(
-                                                    model.mainLocation!,
+                                                    widget.model.mainLocation!,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .subtitle2!
@@ -303,7 +321,7 @@ class RestaurantDetails extends StatelessWidget {
                                               height: 10.0,
                                             ),
                                             Text(
-                                              model.info!,
+                                              widget.model.info!,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle2!
@@ -326,7 +344,7 @@ class RestaurantDetails extends StatelessWidget {
                                               height: 10.0,
                                             ),
                                             Text(
-                                              model.highLights!,
+                                              widget.model.highLights!,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle2!
@@ -349,7 +367,7 @@ class RestaurantDetails extends StatelessWidget {
                                               height: 10.0,
                                             ),
                                             Text(
-                                              model.phoneNumber!,
+                                              widget.model.phoneNumber!,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle2!
@@ -377,7 +395,7 @@ class RestaurantDetails extends StatelessWidget {
                                           ),
                                           Expanded(
                                             child: Text(
-                                              model.mainLocation!,
+                                              widget.model.mainLocation!,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle2!
@@ -397,8 +415,7 @@ class RestaurantDetails extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: ListView.separated(
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
+                                            physics: BouncingScrollPhysics(),
                                             scrollDirection: Axis.horizontal,
                                             itemBuilder: (context, index) {
                                               return foodCategoriesBuilder(
@@ -432,14 +449,22 @@ class RestaurantDetails extends StatelessWidget {
                                       physics: BouncingScrollPhysics(),
                                       padding: EdgeInsets.all(5),
                                       itemBuilder: (context, index) {
-                                        return mealBuilder(context: context);
+                                        return mealBuilder(
+                                          context: context,
+                                          index: index,
+                                          model: FoodLayoutCubit.get(context)
+                                                  .mealsList[
+                                              widget.restaurantIndex!],
+                                        );
                                       },
                                       separatorBuilder: (context, index) {
                                         return const SizedBox(
-                                          height: 5.0,
+                                          height: 20.0,
                                         );
                                       },
-                                      itemCount: 4),
+                                      itemCount: FoodLayoutCubit.get(context)
+                                          .mealsList[widget.restaurantIndex!]
+                                          .length),
                                 )
                               ],
                             ),
@@ -457,51 +482,82 @@ class RestaurantDetails extends StatelessWidget {
 
   Widget mealBuilder({
     required BuildContext context,
+    required List<MealModel> model,
+    required int index,
   }) {
-    return Material(
-      elevation: 5.0,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Container(
-              clipBehavior: Clip.antiAlias,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(15.0)),
-              child: Image.network(
-                  width: 100,
-                  'https://img.freepik.com/free-photo/front-view-burger-stand_141793-15542.jpg?w=996&t=st=1663718016~exp=1663718616~hmac=84f0867d877f9f30ebd6070496b097713600f4b83fd68dcf9aa8b3ba6c36d52b'),
-            ),
-            SizedBox(
-              width: 15.0,
-            ),
-            Column(
-              children: [
-                Text(
-                  'Meal Name',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(fontSize: 18.0),
+    return model.isEmpty
+        ? LottieBuilder.asset('assets/anims/nodata.json')
+        : GestureDetector(
+            onTap: () {
+              navigateTo(
+                  context,
+                  MealDetails(
+                    model: model[index],
+                    index: index,
+                    restaurantIndex: widget.restaurantIndex!,
+                    restaurantId: FoodLayoutCubit.get(context)
+                        .restaurantId[widget.restaurantIndex!],
+                  ));
+            },
+            child: Material(
+              elevation: 5.0,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: [
+                    Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.0)),
+                      child: Image.network(
+                          width: Helper.getScreenWidth(context: context) * 0.27,
+                          '${model[index].image}'),
+                    ),
+                    const SizedBox(
+                      width: 15.0,
+                    ),
+                    Column(
+                      children: [
+                        SizedBox(
+                          width: Helper.getScreenWidth(context: context) * 0.4,
+                          child: Text(
+                            '${model[index].name}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        Text(
+                          'EGP ${model[index].mediumSizePrice}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(
+                                  fontSize: 16.0, fontWeight: FontWeight.w400),
+                        )
+                      ],
+                    ),
+                    const Spacer(),
+                    SizedBox(
+                        width: Helper.getScreenWidth(context: context) * 0.1,
+                        child: favoriteButton(
+                            iconColor: greyTextColor,
+                            fun: () {
+                              print("LOVE");
+                            }))
+                  ],
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Text(
-                  'EGP 45.00',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(fontSize: 18.0),
-                )
-              ],
+              ),
             ),
-            Spacer(),
-            Icon(Icons.favorite, color: greyTextColor),
-          ],
-        ),
-      ),
-    );
+          );
   }
 
   Widget foodCategoriesBuilder(

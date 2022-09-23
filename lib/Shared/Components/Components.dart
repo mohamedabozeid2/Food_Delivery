@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:food_delivery/Modules/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 
 import '../../utils/helper.dart';
 
 Widget myDivider(
     {required Color color,
-      double paddingVertical = 8.0,
-      double paddingHorizontal = 8.0}) {
+    double paddingVertical = 8.0,
+    double paddingHorizontal = 8.0}) {
   return Padding(
     padding: EdgeInsets.symmetric(
         vertical: paddingVertical, horizontal: paddingHorizontal),
@@ -58,6 +59,10 @@ Widget defaultButton({
   return Container(
     width: width,
     height: height,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(borderRadius),
+      color: backgroundColor,
+    ),
     child: MaterialButton(
       onPressed: fun,
       child: Text(
@@ -68,19 +73,15 @@ Widget defaultButton({
         ),
       ),
     ),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(borderRadius),
-      color: backgroundColor,
-    ),
   );
 }
 
 Widget defaultTextButton(
     {required String text,
-      required fun,
-      double fontSize = 14,
-      Color textColor = Colors.blue,
-      FontWeight weight = FontWeight.w300}) {
+    required fun,
+    double fontSize = 14,
+    Color textColor = Colors.blue,
+    FontWeight weight = FontWeight.w300}) {
   return TextButton(
       onPressed: fun,
       child: Text(
@@ -184,10 +185,8 @@ Widget textFormFieldWithHint({
         return validation;
       }
     },
-    style: TextStyle(
-        color: mainColor
-    ),
-    onChanged: (value){
+    style: TextStyle(color: mainColor),
+    onChanged: (value) {
       print(value);
     },
     decoration: InputDecoration(
@@ -231,10 +230,78 @@ Widget textFormFieldWithHint({
   );
 }
 
-Widget logoDisplay({required BuildContext context}){
+Widget logoDisplay({required BuildContext context}) {
   return Image(
     image: AssetImage('assets/images/logo.png'),
     height: Helper.getScreenHeight(context: context) * 0.28,
+  );
+}
+
+Widget favoriteButton({required fun, required Color iconColor}) {
+  return IconButton(
+      onPressed: fun,
+      icon: Icon(
+        Icons.favorite,
+        color: iconColor,
+      ));
+}
+
+Widget quantityButton(
+    {required IconData icon,
+    required fun,
+    required BuildContext context,
+    required backgroundColor}) {
+  return GestureDetector(
+    onTap: fun,
+    child: Container(
+      width: Helper.getScreenWidth(context: context) * 0.1,
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.0),
+        color: backgroundColor,
+      ),
+      child: Icon(icon, color: Colors.white),
+    ),
+  );
+}
+
+Widget cartButton(
+    {required BuildContext context,
+    required String text,
+      required Color color,
+      required fun,
+    required String price}) {
+  return Column(
+    children: [
+      Material(
+        elevation: 8,
+        borderRadius: BorderRadius.circular(80),
+        child: GestureDetector(
+          onTap: fun,
+          child: Container(
+            // width: Helper.getScreenWidth(context: context) * 0.14,
+            padding: const EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+                color: color, borderRadius: BorderRadius.circular(40.0)),
+            child: Text(text,
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2!
+                    .copyWith(fontSize: 12, fontWeight: FontWeight.w500)),
+          ),
+        ),
+      ),
+      const SizedBox(
+        height: 10,
+      ),
+      Text(
+        '$price EGP',
+        style: Theme.of(context)
+            .textTheme
+            .subtitle2!
+            .copyWith(fontSize: 13.0, fontWeight: FontWeight.w600),
+      )
+    ],
   );
 }
 

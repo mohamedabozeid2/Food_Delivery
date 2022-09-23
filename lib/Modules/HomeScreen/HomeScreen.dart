@@ -107,7 +107,7 @@ class HomeScreen extends StatelessWidget {
   }) {
     return InkWell(
       onTap: (){
-        navigateTo(context, RestaurantDetails(model: model, tagsModel: tagsModel,));
+        navigateTo(context, RestaurantDetails(model: model, tagsModel: tagsModel,restaurantIndex: index,));
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 20.0, right:20.0 ),
