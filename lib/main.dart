@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
         title: 'Food Delivery',
         theme: lightTheme,
         themeMode: ThemeMode.light,
-        home: LayoutScreen(),
+        home: startWidget,
       ),
     );
   }
