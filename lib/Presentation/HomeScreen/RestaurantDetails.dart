@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_delivery/Models/MealModel.dart';
-import 'package:food_delivery/Models/RestaurantModel.dart';
-import 'package:food_delivery/Modules/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
-import 'package:food_delivery/Modules/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
-import 'package:food_delivery/Modules/HomeScreen/MealDetails.dart';
+import 'package:food_delivery/DataModels/MealModel.dart';
+import 'package:food_delivery/DataModels/RestaurantModel.dart';
+import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
+import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
+import 'package:food_delivery/Presentation/HomeScreen/MealDetails.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/utils/helper.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../Models/TagsModel.dart';
+import '../../DataModels/TagsModel.dart';
 import '../../Shared/styles/Themes.dart';
 
 class RestaurantDetails extends StatefulWidget {
@@ -510,16 +510,17 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.0)),
                       child: Image.network(
-                          width: Helper.getScreenWidth(context: context) * 0.27,
+                          width: Helper.getScreenWidth(context: context) * 0.37,
                           '${model[index].image}'),
                     ),
                     const SizedBox(
                       width: 15.0,
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: Helper.getScreenWidth(context: context) * 0.4,
+                          width: Helper.getScreenWidth(context: context) * 0.3,
                           child: Text(
                             '${model[index].name}',
                             maxLines: 1,
@@ -537,6 +538,7 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                         ),
                         Text(
                           'EGP ${model[index].mediumSizePrice}',
+                          textAlign: TextAlign.start,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText2!
@@ -551,7 +553,7 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                         child: favoriteButton(
                             iconColor: greyTextColor,
                             fun: () {
-                              print("LOVE");
+                              FoodLayoutCubit.get(context).addToFavorite(mealModel: model[index]);
                             }))
                   ],
                 ),

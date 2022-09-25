@@ -2,14 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
-import 'package:food_delivery/Models/MealModel.dart';
-import 'package:food_delivery/Modules/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
+import 'package:food_delivery/DataModels/MealModel.dart';
+import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
+import 'package:food_delivery/Shared/Constants/Constants.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 
-import '../../../Models/CartModel.dart';
-import '../../../Models/MealContentModel.dart';
-import '../../../Models/RestaurantModel.dart';
-import '../../../Models/TagsModel.dart';
+import '../../../DataModels/CartModel.dart';
+import '../../../DataModels/MealContentModel.dart';
+import '../../../DataModels/RestaurantModel.dart';
+import '../../../DataModels/TagsModel.dart';
 import '../../HomeScreen/HomeScreen.dart';
 
 class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
@@ -107,17 +108,27 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
     });
   }
 
-
   List<MealContentModel> mealContentList = [];
 
   void getMealContent(
       {required String restaurantDoc, required String mealDoc}) {
-    FirebaseFirestore.instance.collection('Restaurants').doc(restaurantDoc)
-        .collection('meal').doc(mealDoc)
-        .collection('includes').get().then((value){
-          for (var element in value.docs) {
-            mealContentList.add(MealContentModel.fromJson(element.data()));
-          }
+    mealContentList = [];
+    emit(FoodLayoutGetMealContentLoadingState());
+    FirebaseFirestore.instance
+        .collection('Restaurants')
+        .doc(restaurantDoc)
+        .collection('meal')
+        .doc(mealDoc)
+        .collection('includes')
+        .get()
+        .then((value) {
+      for (var element in value.docs) {
+        mealContentList.add(MealContentModel.fromJson(element.data()));
+      }
+      emit(FoodLayoutGetMealContentSuccessState());
+    }).catchError((error) {
+      debugPrint('Error in meal content ===>${error.toString()}');
+      emit(FoodLayoutGetMealContentErrorState());
     });
   }
 
@@ -132,10 +143,28 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
   String mealSize = '';
   List<CartModel> cartModel = [];
 
-  void addToCart({required int mealQuantity,
-    required double mealPrice,
-    required MealModel mealModel}) {
-    cartModel.add(
-        CartModel(quantity: mealQuantity, meal: mealModel, price: mealPrice));
+  // void addToCart(
+  //     {required int mealQuantity,
+  //     required double mealPrice,
+  //     required MealModel mealModel}) {
+  //   cartModel.add(
+  //       CartModel(quantity: mealQuantity, meal: mealModel, price: mealPrice));
+  // }
+  //
+
+  void addToFavorite({required MealModel mealModel}) {
+    print('userid ${uId}');
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .collection('fav')
+        .add(mealModel.toMap())
+        .then((value) {
+          print('done');
+    })
+        .catchError((error) {
+          print('not done');
+    });
   }
 }

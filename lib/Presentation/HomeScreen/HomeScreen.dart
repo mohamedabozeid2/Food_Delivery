@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_delivery/Models/RestaurantModel.dart';
-import 'package:food_delivery/Models/TagsModel.dart';
-import 'package:food_delivery/Modules/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
-import 'package:food_delivery/Modules/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
-import 'package:food_delivery/Modules/HomeScreen/RestaurantDetails.dart';
+import 'package:food_delivery/DataModels/RestaurantModel.dart';
+import 'package:food_delivery/DataModels/TagsModel.dart';
+import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
+import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
+import 'package:food_delivery/Presentation/HomeScreen/RestaurantDetails.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 import 'package:food_delivery/utils/helper.dart';

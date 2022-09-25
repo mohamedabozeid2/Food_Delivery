@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_delivery/Modules/MapScreen/cubit/MapStates.dart';
+import 'package:food_delivery/Presentation/MapScreen/cubit/MapStates.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 

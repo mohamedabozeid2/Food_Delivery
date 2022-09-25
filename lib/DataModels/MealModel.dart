@@ -1,7 +1,7 @@
 class MealModel {
-  dynamic? mediumSizePrice;
-  dynamic? smallSizePrice;
-  dynamic? largeSizePrice;
+  dynamic mediumSizePrice;
+  dynamic smallSizePrice;
+  dynamic largeSizePrice;
   String? description;
   String? name;
   String? image;

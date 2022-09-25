@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_delivery/Modules/LoginScreen/LoginCubit/LoginCubit.dart';
-import 'package:food_delivery/Modules/LoginScreen/LoginCubit/LoginStates.dart';
-import 'package:food_delivery/Modules/Otp/Otp.dart';
+import 'package:food_delivery/Presentation/LoginScreen/LoginCubit/LoginCubit.dart';
+import 'package:food_delivery/Presentation/LoginScreen/LoginCubit/LoginStates.dart';
+import 'package:food_delivery/Presentation/Otp/Otp.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:lottie/lottie.dart';
 

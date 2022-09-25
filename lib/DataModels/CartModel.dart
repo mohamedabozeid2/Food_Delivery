@@ -1,4 +1,4 @@
-import 'package:food_delivery/Models/MealModel.dart';
+import 'package:food_delivery/DataModels//MealModel.dart';
 
 class CartModel {
   MealModel meal;

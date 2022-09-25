@@ -11,7 +11,6 @@ import 'Cubit/FoodLayoutStates.dart';
 import 'Widgets/SearchBar.dart';
 
 class LayoutScreen extends StatefulWidget {
-  const LayoutScreen({Key? key}) : super(key: key);
 
   @override
   State<LayoutScreen> createState() => _LayoutScreenState();

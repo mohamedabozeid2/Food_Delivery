@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_delivery/Modules/Otp/Loading.dart';
-import 'package:food_delivery/Modules/Otp/Otp.dart';
+import 'package:food_delivery/Presentation/Otp/Loading.dart';
+import 'package:food_delivery/Presentation/Otp/Otp.dart';
 import 'package:get/get.dart';
 
 import '../../Shared/Components/Components.dart';

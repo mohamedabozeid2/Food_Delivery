@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:food_delivery/Modules/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
+import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 
 import '../../utils/helper.dart';

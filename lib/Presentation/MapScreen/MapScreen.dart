@@ -2,13 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_delivery/Modules/MapScreen/cubit/MapCubit.dart';
-import 'package:food_delivery/Modules/MapScreen/cubit/MapStates.dart';
+import 'package:food_delivery/Presentation/MapScreen/cubit/MapCubit.dart';
+import 'package:food_delivery/Presentation/MapScreen/cubit/MapStates.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
-import 'package:food_delivery/utils/helper.dart';
-import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 
 class MapSample extends StatefulWidget {
   @override

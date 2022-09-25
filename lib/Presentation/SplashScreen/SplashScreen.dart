@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:food_delivery/Modules/OnBoardingScreen/OnBoardingScreen.dart';
+import 'package:food_delivery/Presentation/OnBoardingScreen/OnBoardingScreen.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/utils/helper.dart';
 

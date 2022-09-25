@@ -1,20 +1,20 @@
 class MealContentModel{
   String? image;
-  String? name;
+  String? meal;
 
   MealContentModel({
-    required this.name,
+    required this.meal,
     required this.image,
 });
 
   MealContentModel.fromJson(Map<String, dynamic> json){
     image = json['image'];
-    name = json['name'];
+    meal = json['meal'];
   }
 
   Map<String, dynamic> toMap(){
     return {
-      'name' : name,
+      'meal' : meal,
       'image' : image,
     };
   }
