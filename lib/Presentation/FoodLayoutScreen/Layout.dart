@@ -65,46 +65,9 @@ class _LayoutScreenState extends State<LayoutScreen> {
               ],
             ),
           ),
-          body: state is FoodLayoutGetRestaurantsLoadingState ? const Center(child: CircularProgressIndicator()): CustomScrollView(
+          body: state is FoodLayoutGetRestaurantsLoadingState ? Center(child: CircularProgressIndicator(color: mainColor,)): CustomScrollView(
             slivers: [
-              // SliverAppBar(
-              //
-              //   toolbarHeight: Helper.getScreenHeight(context: context) * 0.2,
-              //   title: Row(
-              //     children: [
-              //       Expanded(
-              //         child: Column(
-              //           children: [
-              //             Text(
-              //               'Delivery to',
-              //               style:
-              //                   Theme.of(context).textTheme.subtitle2!.copyWith(
-              //                         fontSize: 13.0,
-              //                       ),
-              //             ),
-              //             const SizedBox(
-              //               height: 15.0,
-              //             ),
-              //             Text(
-              //               'Alexandria',
-              //               style: Theme.of(context)
-              //                   .textTheme
-              //                   .bodyText2!
-              //                   .copyWith(fontSize: 17.0),
-              //             ),
-              //             const SizedBox(
-              //               height: 15.0,
-              //             ),
-              //             SearchBar(),
-              //             const SizedBox(
-              //               height: 10.0,
-              //             ),
-              //           ],
-              //         ),
-              //       )
-              //     ],
-              //   ),
-              // ),
+
               SliverFillRemaining(
                   fillOverscroll: true,
                   child: FoodLayoutCubit.get(context)
@@ -117,7 +80,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
             elevation: 0.0,
             backgroundColor: inActiveColor,
             onPressed: () {
-              print(FoodLayoutCubit.get(context).currentIndex);
+
             },
             child: const Icon(Icons.shopping_cart, color: Colors.white),
           ),

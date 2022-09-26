@@ -17,42 +17,40 @@ import 'Shared/BlocObserver/BlocObserver.dart';
 import 'Shared/Network/Local/CacheHelper.dart';
 import 'firebase_options.dart';
 
-void main() async{
-
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // st
       // a
       statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.dark// tus bar color
-  ));
+      statusBarIconBrightness: Brightness.dark // tus bar color
+      ));
 
   await CacheHelper.init();
   Widget startWidget;
-  if(CacheHelper.getData(key: 'onBoarding') == null){
+  if (CacheHelper.getData(key: 'onBoarding') == null) {
     onBoarding = false;
-  }else{
+  } else {
     onBoarding = true;
   }
 
   uId = CacheHelper.getData(key: 'uId');
   print("UIDBRO ${uId}");
-  if(CacheHelper.getData(key: 'loggedIn') == null){
+  if (CacheHelper.getData(key: 'loggedIn') == null) {
     loggedIn = false;
-  }else if(CacheHelper.getData(key: 'loggedIn') == false) {
+  } else if (CacheHelper.getData(key: 'loggedIn') == false) {
     loggedIn = false;
-  } else{
+  } else {
     loggedIn = true;
   }
 
   if (onBoarding == true) {
-    if (loggedIn ==true) {
+    if (loggedIn == true) {
       startWidget = LayoutScreen();
     } else {
       startWidget = LoginScreen();
@@ -61,7 +59,7 @@ void main() async{
     startWidget = OnBoardingScreen();
   }
   BlocOverrides.runZoned(
-        () {
+    () {
       runApp(MyApp(
         startWidget: startWidget,
       ));
@@ -69,16 +67,19 @@ void main() async{
     blocObserver: MyBlocObserver(),
   );
 }
+
 class MyApp extends StatelessWidget {
   Widget startWidget;
+
   MyApp({required this.startWidget});
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context)=> MapCubit()),
-        BlocProvider(create: (context)=> FoodLoginCubit()),
-        BlocProvider(create: (context)=> FoodLayoutCubit()),
+        BlocProvider(create: (context) => MapCubit()),
+        BlocProvider(create: (context) => FoodLoginCubit()),
+        BlocProvider(create: (context) => FoodLayoutCubit()),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
@@ -90,4 +91,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

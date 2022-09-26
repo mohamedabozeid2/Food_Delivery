@@ -3,7 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:food_delivery/DataModels/MealModel.dart';
+import 'package:food_delivery/Presentation/FavoriteScreen/FavoriteScreen.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
+import 'package:food_delivery/Presentation/MyOrdersScreen/MyOrdersScreen.dart';
+import 'package:food_delivery/Presentation/ProfileScreen/ProfileScreen.dart';
 import 'package:food_delivery/Shared/Constants/Constants.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 
@@ -20,6 +23,9 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
 
   List<Widget> screens = [
     HomeScreen(),
+    FavoriteScreen(),
+    MyOrdersScreen(),
+    ProfileScreen(),
   ];
 
   List<String> botNavTitles = [
@@ -70,45 +76,62 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
   List<List<MealModel>> mealsList = [];
   List<String> restaurantId = [];
   List<List<String>> mealId = [];
+  List<MealContentModel> mealContentList = [];
+  List<String> favID = [];
+  List<MealModel> favMeals = [];
 
   void getRestaurants() async {
     restaurants = [];
     tagsList = [];
     mealsList = [];
+    mealContentList = [];
     emit(FoodLayoutGetRestaurantsLoadingState());
     await FirebaseFirestore.instance
         .collection('Restaurants')
         .get()
         .then((value) async {
-      for (var element in value.docs) {
-        restaurantId.add(element.id);
-        await element.reference.collection('tags').get().then((tags) async {
-          await element.reference.collection('meal').get().then((meals) {
-            restaurants.add(RestaurantModel.fromJson(element.data()));
-            List<MealModel> singleMeal = [];
-            List<String> singleMealIds = [];
-            for (var element in meals.docs) {
-              singleMealIds.add(element.id);
-              singleMeal.add(MealModel.fromJson(element.data()));
-            }
-            mealId.add(singleMealIds);
-            mealsList.add(singleMeal);
-            List<TagsModel> singleTags = [];
-            for (var element in tags.docs) {
-              singleTags.add(TagsModel.fromJson(element.data()));
-            }
-            tagsList.add(singleTags);
+      await getFav().then((_) async {
+        for (var element in value.docs) {
+          restaurantId.add(element.id);
+          await element.reference.collection('tags').get().then((tags) async {
+            await element.reference
+                .collection('meal')
+                .get()
+                .then((meals) async {
+              restaurants.add(RestaurantModel.fromJson(element.data()));
+              List<MealModel> singleMeal = [];
+              List<String> singleMealIds = [];
+              for (int i = 0; i < meals.docs.length; i++) {
+                // await meals.docs[i].reference.collection('includes').get().then((value){
+                // value.docs.forEach((element) {
+                //   mealContentList.add(MealContentModel.fromJson(element.data()));
+                // });
+                singleMealIds.add(meals.docs[i].id);
+                singleMeal.add(MealModel.fromJson(meals.docs[i].data()));
+                // if (favID.contains(singleMeal[i].id)) {
+                //   favMeals.add(singleMeal[i]);
+                // }
+                // });
+              }
+
+              mealId.add(singleMealIds);
+              mealsList.add(singleMeal);
+              List<TagsModel> singleTags = [];
+              for (var element in tags.docs) {
+                singleTags.add(TagsModel.fromJson(element.data()));
+              }
+              tagsList.add(singleTags);
+            });
           });
-        });
-      }
+        }
+      });
+
       emit(FoodLayoutGetRestaurantsSuccessState());
     }).catchError((error) {
       debugPrint('Error from get restaurants ===> ${error.toString()}');
       emit(FoodLayoutGetRestaurantsErrorState());
     });
   }
-
-  List<MealContentModel> mealContentList = [];
 
   void getMealContent(
       {required String restaurantDoc, required String mealDoc}) {
@@ -139,32 +162,50 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
     emit(FoodLayoutShowMoreInfoState());
   }
 
-  int mealQuantity = 0;
-  String mealSize = '';
-  List<CartModel> cartModel = [];
-
-  // void addToCart(
-  //     {required int mealQuantity,
-  //     required double mealPrice,
-  //     required MealModel mealModel}) {
-  //   cartModel.add(
-  //       CartModel(quantity: mealQuantity, meal: mealModel, price: mealPrice));
-  // }
-  //
-
-  void addToFavorite({required MealModel mealModel}) {
-    print('userid ${uId}');
-
-    FirebaseFirestore.instance
+  Future<void> getFav({bool fromAddFav = false}) async {
+    favID = [];
+    favMeals = [];
+    await FirebaseFirestore.instance
         .collection('users')
         .doc(uId)
         .collection('fav')
-        .add(mealModel.toMap())
+        .get()
         .then((value) {
-          print('done');
-    })
-        .catchError((error) {
-          print('not done');
+      for (var element in value.docs) {
+        favID.add(element.id);
+        favMeals.add(MealModel.fromJson(element.data()));
+      }
+      if (fromAddFav) {
+        emit(FoodLayoutAddFavoriteSuccessState());
+      }
+    }).catchError((error) {
+      debugPrint('Error in remove fav ${error.toString()}');
+      emit(FoodLayoutAddFavoriteErrorState());
     });
+  }
+
+  void addOrRemoveFavorite({required MealModel mealModel}) {
+    emit(FoodLayoutAddFavoriteLoadingState());
+    if (favID.contains(mealModel.id)) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(uId)
+          .collection('fav')
+          .doc(mealModel.id)
+          .delete()
+          .then((value) {
+        getFav(fromAddFav: true);
+      });
+    } else {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(uId)
+          .collection('fav')
+          .doc(mealModel.id)
+          .set(mealModel.toMap())
+          .then((value) {
+        getFav(fromAddFav: true);
+      });
+    }
   }
 }

@@ -32,7 +32,8 @@ class HomeScreen extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           return sortByItemBuilder(
-                            text: FoodLayoutCubit.get(context).sortByList[index],
+                            text:
+                                FoodLayoutCubit.get(context).sortByList[index],
                             index: index,
                             context: context,
                           );
@@ -106,11 +107,17 @@ class HomeScreen extends StatelessWidget {
     required int index,
   }) {
     return InkWell(
-      onTap: (){
-        navigateTo(context, RestaurantDetails(model: model, tagsModel: tagsModel,restaurantIndex: index,));
+      onTap: () {
+        navigateTo(
+            context,
+            RestaurantDetails(
+              model: model,
+              tagsModel: tagsModel,
+              restaurantIndex: index,
+            ));
       },
       child: Padding(
-        padding: const EdgeInsets.only(left: 20.0, right:20.0 ),
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
         child: Row(
           children: [
             Column(
@@ -121,8 +128,7 @@ class HomeScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: Image.network(
-                      model.image!),
+                  child: Image.network(model.image!),
                 )
               ],
             ),
@@ -215,10 +221,12 @@ class HomeScreen extends StatelessWidget {
                             ),
                             Text(
                               model.rate.toString(),
-                              style:
-                                  Theme.of(context).textTheme.subtitle2!.copyWith(
-                                        color: greyTextColor,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2!
+                                  .copyWith(
+                                    color: greyTextColor,
+                                  ),
                             ),
                           ],
                         )),
@@ -233,27 +241,28 @@ class HomeScreen extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.all(8.0),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            border: Border.all(
-                              color: mainColor
-                            )
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(color: mainColor)),
+                          child: Text(
+                            'Popular',
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle2!
+                                .copyWith(color: mainColor),
                           ),
-                          child: Text('Popular', style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                            color: mainColor
-                          ),),
                         ),
-
                         Container(
                           padding: EdgeInsets.all(8.0),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            border: Border.all(
-                              color: mainColor
-                            )
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(color: mainColor)),
+                          child: Text(
+                            'New',
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle2!
+                                .copyWith(color: mainColor),
                           ),
-                          child: Text('New', style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                            color: mainColor
-                          ),),
                         )
                       ],
                     )

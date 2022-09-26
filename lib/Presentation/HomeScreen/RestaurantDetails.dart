@@ -6,6 +6,7 @@ import 'package:food_delivery/DataModels/RestaurantModel.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
 import 'package:food_delivery/Presentation/HomeScreen/MealDetails.dart';
+import 'package:food_delivery/Presentation/HomeScreen/Widgets/MealBuilder.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/utils/helper.dart';
 import 'package:lottie/lottie.dart';
@@ -449,13 +450,13 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                                       physics: BouncingScrollPhysics(),
                                       padding: EdgeInsets.all(5),
                                       itemBuilder: (context, index) {
-                                        return mealBuilder(
-                                          context: context,
-                                          index: index,
-                                          model: FoodLayoutCubit.get(context)
-                                                  .mealsList[
-                                              widget.restaurantIndex!],
-                                        );
+                                        return MealBuilder(
+                                            model: FoodLayoutCubit.get(context)
+                                                    .mealsList[
+                                                widget.restaurantIndex!],
+                                            index: index,
+                                            restaurantIndex: widget
+                                                .restaurantIndex!);
                                       },
                                       separatorBuilder: (context, index) {
                                         return const SizedBox(
@@ -480,87 +481,6 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
     );
   }
 
-  Widget mealBuilder({
-    required BuildContext context,
-    required List<MealModel> model,
-    required int index,
-  }) {
-    return model.isEmpty
-        ? LottieBuilder.asset('assets/anims/nodata.json')
-        : GestureDetector(
-            onTap: () {
-              navigateTo(
-                  context,
-                  MealDetails(
-                    model: model[index],
-                    index: index,
-                    restaurantIndex: widget.restaurantIndex!,
-                    restaurantId: FoodLayoutCubit.get(context)
-                        .restaurantId[widget.restaurantIndex!],
-                  ));
-            },
-            child: Material(
-              elevation: 5.0,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    Container(
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0)),
-                      child: Image.network(
-                          width: Helper.getScreenWidth(context: context) * 0.37,
-                          '${model[index].image}'),
-                    ),
-                    const SizedBox(
-                      width: 15.0,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: Helper.getScreenWidth(context: context) * 0.3,
-                          child: Text(
-                            '${model[index].name}',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2!
-                                .copyWith(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10.0,
-                        ),
-                        Text(
-                          'EGP ${model[index].mediumSizePrice}',
-                          textAlign: TextAlign.start,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2!
-                              .copyWith(
-                                  fontSize: 16.0, fontWeight: FontWeight.w400),
-                        )
-                      ],
-                    ),
-                    const Spacer(),
-                    SizedBox(
-                        width: Helper.getScreenWidth(context: context) * 0.1,
-                        child: favoriteButton(
-                            iconColor: greyTextColor,
-                            fun: () {
-                              FoodLayoutCubit.get(context).addToFavorite(mealModel: model[index]);
-                            }))
-                  ],
-                ),
-              ),
-            ),
-          );
-  }
 
   Widget foodCategoriesBuilder(
       {required String text,

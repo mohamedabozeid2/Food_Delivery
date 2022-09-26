@@ -16,4 +16,9 @@ class FoodLayoutGetRestaurantsErrorState extends FoodLayoutStates{}
 
 class FoodLayoutGetMealContentLoadingState extends FoodLayoutStates{}
 class FoodLayoutGetMealContentSuccessState extends FoodLayoutStates{}
-class FoodLayoutGetMealContentErrorState extends FoodLayoutStates{}
+class FoodLayoutGetMealContentErrorState extends FoodLayoutStates{
+
+}
+class FoodLayoutAddFavoriteLoadingState extends FoodLayoutStates{}
+class FoodLayoutAddFavoriteSuccessState extends FoodLayoutStates{}
+class FoodLayoutAddFavoriteErrorState extends FoodLayoutStates{}

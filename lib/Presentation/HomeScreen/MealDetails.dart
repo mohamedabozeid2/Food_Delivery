@@ -14,6 +14,8 @@ class MealDetails extends StatefulWidget {
   int index;
   String restaurantId;
   int restaurantIndex;
+  int quantity = 0;
+  dynamic price = 0;
 
   MealDetails(
       {required this.model,
@@ -28,7 +30,6 @@ class MealDetails extends StatefulWidget {
 class _MealDetailsState extends State<MealDetails> {
   @override
   void initState() {
-    print(widget.restaurantId);
     FoodLayoutCubit.get(context).getMealContent(
         restaurantDoc:
             FoodLayoutCubit.get(context).restaurantId[widget.restaurantIndex],
@@ -90,12 +91,10 @@ class _MealDetailsState extends State<MealDetails> {
                                   quantityButton(
                                       icon: Icons.minimize,
                                       fun: () {
-                                        if (FoodLayoutCubit.get(context)
-                                                .mealQuantity >
-                                            0) {
+                                        if (widget.quantity > 0) {
                                           setState(() {
-                                            FoodLayoutCubit.get(context)
-                                                .mealQuantity--;
+                                            widget.quantity--;
+                                            print(widget.quantity);
                                           });
                                         }
                                       },
@@ -104,8 +103,7 @@ class _MealDetailsState extends State<MealDetails> {
                                   const SizedBox(
                                     width: 30,
                                   ),
-                                  Text(
-                                      '${FoodLayoutCubit.get(context).mealQuantity}'),
+                                  Text('${widget.quantity}'),
                                   const SizedBox(
                                     width: 30,
                                   ),
@@ -113,8 +111,8 @@ class _MealDetailsState extends State<MealDetails> {
                                       icon: Icons.add,
                                       fun: () {
                                         setState(() {
-                                          FoodLayoutCubit.get(context)
-                                              .mealQuantity++;
+                                          widget.quantity++;
+                                          print(widget.quantity);
                                         });
                                       },
                                       context: context,
@@ -133,13 +131,12 @@ class _MealDetailsState extends State<MealDetails> {
                                         text: 'S',
                                         fun: () {
                                           setState(() {
-                                            FoodLayoutCubit.get(context)
-                                                .mealSize = 'small';
+                                            widget.price =
+                                                widget.model.smallSizePrice;
                                           });
                                         },
-                                        color: FoodLayoutCubit.get(context)
-                                                    .mealSize ==
-                                                'small'
+                                        color: widget.price ==
+                                                widget.model.smallSizePrice
                                             ? mainColor
                                             : Colors.white,
                                         price: widget.model.smallSizePrice
@@ -151,13 +148,12 @@ class _MealDetailsState extends State<MealDetails> {
                                         text: 'M',
                                         fun: () {
                                           setState(() {
-                                            FoodLayoutCubit.get(context)
-                                                .mealSize = 'medium';
+                                            widget.price =
+                                                widget.model.mediumSizePrice;
                                           });
                                         },
-                                        color: FoodLayoutCubit.get(context)
-                                                    .mealSize ==
-                                                'medium'
+                                        color: widget.price ==
+                                                widget.model.mediumSizePrice
                                             ? mainColor
                                             : Colors.white,
                                         price: widget.model.mediumSizePrice
@@ -169,13 +165,12 @@ class _MealDetailsState extends State<MealDetails> {
                                         text: 'L',
                                         fun: () {
                                           setState(() {
-                                            FoodLayoutCubit.get(context)
-                                                .mealSize = 'large';
+                                            widget.price =
+                                                widget.model.largeSizePrice;
                                           });
                                         },
-                                        color: FoodLayoutCubit.get(context)
-                                                    .mealSize ==
-                                                'large'
+                                        color: widget.price ==
+                                                widget.model.largeSizePrice
                                             ? mainColor
                                             : Colors.white,
                                         price: widget.model.largeSizePrice
@@ -250,7 +245,7 @@ class _MealDetailsState extends State<MealDetails> {
                           ],
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               )
@@ -266,9 +261,7 @@ class _MealDetailsState extends State<MealDetails> {
       children: [
         Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.0)
-          ),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.0)),
           child: Image.network(
             model.image!,
             width: Helper.getScreenWidth(context: context) * 0.3,
