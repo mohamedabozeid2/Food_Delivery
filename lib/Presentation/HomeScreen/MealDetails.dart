@@ -6,6 +6,7 @@ import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubi
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 import 'package:food_delivery/utils/helper.dart';
+import 'package:get/get.dart';
 
 import '../FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
 
@@ -16,6 +17,7 @@ class MealDetails extends StatefulWidget {
   int restaurantIndex;
   int quantity = 0;
   dynamic price = 0;
+  dynamic totalPrice = 0;
 
   MealDetails(
       {required this.model,
@@ -78,7 +80,8 @@ class _MealDetailsState extends State<MealDetails> {
                     ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding:
+                            const EdgeInsets.only(right: 20, left: 20, top: 20),
                         child: Column(
                           children: [
                             Container(
@@ -94,7 +97,12 @@ class _MealDetailsState extends State<MealDetails> {
                                         if (widget.quantity > 0) {
                                           setState(() {
                                             widget.quantity--;
-                                            print(widget.quantity);
+                                            widget.totalPrice =
+                                                FoodLayoutCubit.get(context)
+                                                    .calcTotalPrice(
+                                                        price: widget.price,
+                                                        quantity:
+                                                            widget.quantity);
                                           });
                                         }
                                       },
@@ -112,7 +120,12 @@ class _MealDetailsState extends State<MealDetails> {
                                       fun: () {
                                         setState(() {
                                           widget.quantity++;
-                                          print(widget.quantity);
+                                          widget.totalPrice =
+                                              FoodLayoutCubit.get(context)
+                                                  .calcTotalPrice(
+                                                      price: widget.price,
+                                                      quantity:
+                                                          widget.quantity);
                                         });
                                       },
                                       context: context,
@@ -133,6 +146,12 @@ class _MealDetailsState extends State<MealDetails> {
                                           setState(() {
                                             widget.price =
                                                 widget.model.smallSizePrice;
+                                            widget.totalPrice =
+                                                FoodLayoutCubit.get(context)
+                                                    .calcTotalPrice(
+                                                        price: widget.price,
+                                                        quantity:
+                                                            widget.quantity);
                                           });
                                         },
                                         color: widget.price ==
@@ -150,6 +169,12 @@ class _MealDetailsState extends State<MealDetails> {
                                           setState(() {
                                             widget.price =
                                                 widget.model.mediumSizePrice;
+                                            widget.totalPrice =
+                                                FoodLayoutCubit.get(context)
+                                                    .calcTotalPrice(
+                                                        price: widget.price,
+                                                        quantity:
+                                                            widget.quantity);
                                           });
                                         },
                                         color: widget.price ==
@@ -167,6 +192,12 @@ class _MealDetailsState extends State<MealDetails> {
                                           setState(() {
                                             widget.price =
                                                 widget.model.largeSizePrice;
+                                            widget.totalPrice =
+                                                FoodLayoutCubit.get(context)
+                                                    .calcTotalPrice(
+                                                        price: widget.price,
+                                                        quantity:
+                                                            widget.quantity);
                                           });
                                         },
                                         color: widget.price ==
@@ -246,6 +277,80 @@ class _MealDetailsState extends State<MealDetails> {
                         ),
                       ),
                     ),
+                    Material(
+                      elevation: 10.0,
+                      child: Container(
+                        height: Helper.getScreenHeight(context: context) * 0.1,
+                        padding: EdgeInsets.all(20.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: mainColor),
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              height: double.maxFinite,
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Total Price',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle2!
+                                          .copyWith(
+                                            fontSize: 14.0,
+                                          ),
+                                    ),
+                                    Text('${widget.totalPrice}')
+                                  ],
+                                ),
+                              ),
+                            )),
+                            const SizedBox(
+                              width: 15.0,
+                            ),
+                            Expanded(
+                                child: GestureDetector(
+                              onTap: () {
+                                if (widget.price != 0 && widget.quantity != 0) {
+                                  FoodLayoutCubit.get(context).addToCart(
+                                      mealModel: widget.model,
+                                      quantity: widget.quantity,
+                                      totalPrice: widget.totalPrice,
+                                      price: widget.price);
+                                } else if (widget.price == 0) {
+                                  Get.snackbar('Food Delivery',
+                                      'Please choose the meal size',
+                                      colorText: Colors.white,
+                                      backgroundColor: Colors.redAccent);
+                                }else if(widget.quantity == 0){
+                                  Get.snackbar('Food Delivery', 'Please choose your meal quanityt', backgroundColor: Colors.redAccent, colorText: Colors.white);
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: mainColor,
+                                    borderRadius: BorderRadius.circular(5.0)),
+                                height: double.maxFinite,
+                                child: Center(
+                                    child: Text(
+                                  'Add To Cart',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2!
+                                      .copyWith(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white),
+                                )),
+                              ),
+                            )),
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 ),
               )

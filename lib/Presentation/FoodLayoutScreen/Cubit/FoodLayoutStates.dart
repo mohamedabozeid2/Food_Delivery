@@ -10,6 +10,8 @@ class FoodLayoutChangeNavState extends FoodLayoutStates{}
 
 class FoodLayoutShowMoreInfoState extends FoodLayoutStates{}
 
+class FoodLayoutRemoveFromCartSuccessState extends FoodLayoutStates{}
+
 class FoodLayoutGetRestaurantsLoadingState extends FoodLayoutStates{}
 class FoodLayoutGetRestaurantsSuccessState extends FoodLayoutStates{}
 class FoodLayoutGetRestaurantsErrorState extends FoodLayoutStates{}

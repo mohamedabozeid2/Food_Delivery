@@ -3,12 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:food_delivery/DataModels/MealModel.dart';
+import 'package:food_delivery/Presentation/CartScreen/CartScreen.dart';
 import 'package:food_delivery/Presentation/FavoriteScreen/FavoriteScreen.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
 import 'package:food_delivery/Presentation/MyOrdersScreen/MyOrdersScreen.dart';
 import 'package:food_delivery/Presentation/ProfileScreen/ProfileScreen.dart';
+import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/Shared/Constants/Constants.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
+import 'package:get/get.dart';
 
 import '../../../DataModels/CartModel.dart';
 import '../../../DataModels/MealContentModel.dart';
@@ -28,6 +31,7 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
     ProfileScreen(),
   ];
 
+  Widget currentScreen = HomeScreen();
   List<String> botNavTitles = [
     'FoodLayout',
     'Favorite',
@@ -35,9 +39,29 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
     'Profile',
   ];
   int currentIndex = 0;
+  bool inCartScreen = false;
 
-  void changeBotNavBar({required int index}) {
-    currentIndex = index;
+  void changeBotNavBar({required int index, required BuildContext context}) {
+    if (index == 0) {
+      currentIndex = index;
+      inCartScreen = false;
+      currentScreen = HomeScreen();
+    } else if (index == 1) {
+      currentIndex = index;
+      inCartScreen = false;
+      currentScreen = FavoriteScreen();
+    } else if (index == 2) {
+      currentIndex = index;
+      inCartScreen = false;
+      currentScreen = MyOrdersScreen();
+    } else if (index == 3) {
+      currentIndex = index;
+      inCartScreen = false;
+      currentScreen = ProfileScreen();
+    } else {
+      inCartScreen = true;
+      currentScreen = CartScreen();
+    }
     emit(FoodLayoutChangeBotNavBarState());
   }
 
@@ -133,6 +157,10 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
     });
   }
 
+  void removeFromCart({required int index}){
+    cartModelList.removeAt(index);
+    emit(FoodLayoutRemoveFromCartSuccessState());
+  }
   void getMealContent(
       {required String restaurantDoc, required String mealDoc}) {
     mealContentList = [];
@@ -182,6 +210,34 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
       debugPrint('Error in remove fav ${error.toString()}');
       emit(FoodLayoutAddFavoriteErrorState());
     });
+  }
+
+  dynamic calcTotalPrice({
+    required dynamic price,
+    required int quantity,
+  }) {
+    dynamic totalPrice = price * quantity;
+    return totalPrice;
+  }
+
+  List<CartModel> cartModelList = [];
+  dynamic totalPrice = 0;
+
+  void addToCart(
+      {required MealModel mealModel,
+      required int quantity,
+      required dynamic price,
+      required dynamic totalPrice}) {
+    CartModel cartModel = CartModel(
+        mealModel: mealModel,
+        quantity: quantity,
+        price: price,
+        totalPrice: totalPrice);
+    totalPrice += price;
+    cartModelList.add(cartModel);
+    Get.snackbar(
+        'Food Delivery', 'The order is added to your cart successfully',
+        colorText: Colors.white, backgroundColor: Colors.green);
   }
 
   void addOrRemoveFavorite({required MealModel mealModel}) {
