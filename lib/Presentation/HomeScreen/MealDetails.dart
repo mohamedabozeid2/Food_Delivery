@@ -68,11 +68,17 @@ class _MealDetailsState extends State<MealDetails> {
                           padding: EdgeInsets.all(2.0),
                           margin: EdgeInsets.only(right: 20),
                           decoration: BoxDecoration(
-                              color: greyTextColor.withOpacity(0.7),
+                              color: FoodLayoutCubit.get(context)
+                                      .favID
+                                      .contains(widget.model.id)
+                                  ? mainColor
+                                  : greyTextColor.withOpacity(0.7),
                               borderRadius: BorderRadius.circular(50)),
                           child: favoriteButton(
                               fun: () {
-                                print('love');
+                                FoodLayoutCubit.get(context)
+                                    .addOrRemoveFavorite(
+                                        mealModel: widget.model);
                               },
                               iconColor: Colors.white),
                         ),
@@ -285,68 +291,61 @@ class _MealDetailsState extends State<MealDetails> {
                         child: Row(
                           children: [
                             Expanded(
-                                child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: mainColor),
-                                  borderRadius: BorderRadius.circular(5.0)),
-                              height: double.maxFinite,
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Total Price',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle2!
-                                          .copyWith(
-                                            fontSize: 14.0,
-                                          ),
-                                    ),
-                                    Text('${widget.totalPrice}')
-                                  ],
-                                ),
-                              ),
-                            )),
+                                child: buttonContainer(fun: (){},color: Colors.white, context: context, child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Total Price',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle2!
+                                            .copyWith(
+                                          fontSize: 14.0,
+                                        ),
+                                      ),
+                                      Text('${widget.totalPrice}')
+                                    ],
+                                  ),
+                                ))),
                             const SizedBox(
                               width: 15.0,
                             ),
                             Expanded(
-                                child: GestureDetector(
-                              onTap: () {
-                                if (widget.price != 0 && widget.quantity != 0) {
-                                  FoodLayoutCubit.get(context).addToCart(
-                                      mealModel: widget.model,
-                                      quantity: widget.quantity,
-                                      totalPrice: widget.totalPrice,
-                                      price: widget.price);
-                                } else if (widget.price == 0) {
-                                  Get.snackbar('Food Delivery',
-                                      'Please choose the meal size',
-                                      colorText: Colors.white,
-                                      backgroundColor: Colors.redAccent);
-                                }else if(widget.quantity == 0){
-                                  Get.snackbar('Food Delivery', 'Please choose your meal quanityt', backgroundColor: Colors.redAccent, colorText: Colors.white);
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: mainColor,
-                                    borderRadius: BorderRadius.circular(5.0)),
-                                height: double.maxFinite,
-                                child: Center(
-                                    child: Text(
-                                  'Add To Cart',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2!
-                                      .copyWith(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white),
-                                )),
-                              ),
-                            )),
+                                child: buttonContainer(
+                                  color: mainColor,
+                                    fun: () {
+                                      if (widget.price != 0 &&
+                                          widget.quantity != 0) {
+                                        FoodLayoutCubit.get(context).addToCart(
+                                            mealModel: widget.model,
+                                            quantity: widget.quantity,
+                                            totalPrice: widget.totalPrice,
+                                            price: widget.price);
+                                      } else if (widget.price == 0) {
+                                        Get.snackbar('Food Delivery',
+                                            'Please choose the meal size',
+                                            colorText: Colors.white,
+                                            backgroundColor: Colors.redAccent);
+                                      } else if (widget.quantity == 0) {
+                                        Get.snackbar('Food Delivery',
+                                            'Please choose your meal quanityt',
+                                            backgroundColor: Colors.redAccent,
+                                            colorText: Colors.white);
+                                      }
+                                    },
+                                    context: context,
+                                    child: Center(
+                                        child: Text(
+                                      'Add To Cart',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText2!
+                                          .copyWith(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white),
+                                    )))),
                           ],
                         ),
                       ),

@@ -10,7 +10,6 @@ class FoodLayoutChangeNavState extends FoodLayoutStates{}
 
 class FoodLayoutShowMoreInfoState extends FoodLayoutStates{}
 
-class FoodLayoutRemoveFromCartSuccessState extends FoodLayoutStates{}
 
 class FoodLayoutGetRestaurantsLoadingState extends FoodLayoutStates{}
 class FoodLayoutGetRestaurantsSuccessState extends FoodLayoutStates{}
@@ -24,3 +23,5 @@ class FoodLayoutGetMealContentErrorState extends FoodLayoutStates{
 class FoodLayoutAddFavoriteLoadingState extends FoodLayoutStates{}
 class FoodLayoutAddFavoriteSuccessState extends FoodLayoutStates{}
 class FoodLayoutAddFavoriteErrorState extends FoodLayoutStates{}
+
+class FoodCalcPriceState extends FoodLayoutStates{}

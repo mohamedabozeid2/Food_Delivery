@@ -157,9 +157,11 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
     });
   }
 
+
+
   void removeFromCart({required int index}){
     cartModelList.removeAt(index);
-    emit(FoodLayoutRemoveFromCartSuccessState());
+    calcCheckPrice(cartModelList: cartModelList);
   }
   void getMealContent(
       {required String restaurantDoc, required String mealDoc}) {
@@ -210,6 +212,15 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
       debugPrint('Error in remove fav ${error.toString()}');
       emit(FoodLayoutAddFavoriteErrorState());
     });
+  }
+
+  void calcCheckPrice({required List<CartModel> cartModelList}){
+    totalCartPrice = 0;
+    for(int i=0; i<cartModelList.length; i++){
+      totalCartPrice += cartModelList[i].totalPrice;
+    }
+    emit(FoodCalcPriceState());
+
   }
 
   dynamic calcTotalPrice({

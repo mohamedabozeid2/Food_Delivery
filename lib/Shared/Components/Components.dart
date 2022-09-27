@@ -265,6 +265,25 @@ Widget quantityButton(
   );
 }
 
+Widget buttonContainer({
+  required fun,
+  required BuildContext context,
+  required Color color,
+  required Widget child,
+}){
+  return GestureDetector(
+    onTap: fun,
+    child: Container(
+      decoration: BoxDecoration(
+          color: color,
+          border: Border.all(color: mainColor),
+          borderRadius: BorderRadius.circular(5.0)),
+      height: double.maxFinite,
+      child: child,
+    ),
+  );
+}
+
 Widget cartButton(
     {required BuildContext context,
     required String text,

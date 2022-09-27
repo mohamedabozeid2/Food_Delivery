@@ -82,6 +82,7 @@ class _CartItemBuilderState extends State<CartItemBuilder> {
                                                   price: widget.model.price,
                                                   quantity:
                                                       widget.model.quantity);
+                                      FoodLayoutCubit.get(context).calcCheckPrice(cartModelList: FoodLayoutCubit.get(context).cartModelList);
                                     });
                                   }
                                 },
@@ -105,7 +106,8 @@ class _CartItemBuilderState extends State<CartItemBuilder> {
                                                 price: widget.model.price,
                                                 quantity:
                                                     widget.model.quantity);
-                                    print(widget.model.price);
+                                    FoodLayoutCubit.get(context).calcCheckPrice(cartModelList: FoodLayoutCubit.get(context).cartModelList);
+
                                   });
                                 },
                                 context: context,
