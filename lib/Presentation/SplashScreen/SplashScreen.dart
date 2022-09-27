@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_delivery/Presentation/OnBoardingScreen/OnBoardingScreen.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
-import 'package:food_delivery/utils/helper.dart';
+import 'package:food_delivery/core/utils/helper.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
 
-import '../../../utils/helper.dart';
+import '../../../core/utils/helper.dart';
 import 'SearchBar.dart';
 
 PreferredSizeWidget defaultAppBar(
-    {required BuildContext context, required bool inCartScreen}) {
+    {required BuildContext context}) {
   return AppBar(
-    toolbarHeight: inCartScreen
-        ? Helper.getScreenHeight(context: context) * 0.1
+    toolbarHeight: FoodLayoutCubit.get(context).inProfileScreen||FoodLayoutCubit.get(context).inCartScreen
+        ? Helper.getScreenHeight(context: context) * 0.05
         : Helper.getScreenHeight(context: context) * 0.2,
     centerTitle: true,
-    title: inCartScreen
+    title: FoodLayoutCubit.get(context).inCartScreen || FoodLayoutCubit.get(context).inProfileScreen
         ? Text(
-            'My Cart',
+      FoodLayoutCubit.get(context).inProfileScreen ? 'Profile' :'My Cart',
             style: Theme.of(context)
                 .textTheme
                 .bodyText2!

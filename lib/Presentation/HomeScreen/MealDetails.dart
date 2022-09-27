@@ -5,7 +5,7 @@ import 'package:food_delivery/DataModels/MealModel.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
-import 'package:food_delivery/utils/helper.dart';
+import 'package:food_delivery/core/utils/helper.dart';
 import 'package:get/get.dart';
 
 import '../FoodLayoutScreen/Cubit/FoodLayoutStates.dart';

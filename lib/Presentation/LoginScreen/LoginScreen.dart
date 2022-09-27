@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 import '../../Shared/Components/Components.dart';
 import '../../Shared/styles/Themes.dart';
-import '../../utils/helper.dart';
+import '../../core/utils/helper.dart';
 import 'LoginCubit/LoginCubit.dart';
 import 'LoginCubit/LoginStates.dart';
 

@@ -6,7 +6,7 @@ import 'package:food_delivery/Presentation/LoginScreen/LoginCubit/LoginStates.da
 import '../../../DataModels/MealModel.dart';
 import '../../../Shared/Components/Components.dart';
 import '../../../Shared/styles/Themes.dart';
-import '../../../utils/helper.dart';
+import '../../../core/utils/helper.dart';
 import '../../FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
 import '../MealDetails.dart';
 

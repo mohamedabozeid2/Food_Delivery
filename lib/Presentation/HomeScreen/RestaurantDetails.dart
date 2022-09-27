@@ -8,7 +8,7 @@ import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutStat
 import 'package:food_delivery/Presentation/HomeScreen/MealDetails.dart';
 import 'package:food_delivery/Presentation/HomeScreen/Widgets/MealBuilder.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
-import 'package:food_delivery/utils/helper.dart';
+import 'package:food_delivery/core/utils/helper.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../DataModels/TagsModel.dart';

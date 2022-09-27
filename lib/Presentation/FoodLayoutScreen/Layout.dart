@@ -4,9 +4,10 @@ import 'package:food_delivery/Presentation/CartScreen/CartScreen.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Widgets/AppBar.dart';
 
 import 'package:food_delivery/Shared/Components/Components.dart';
+import 'package:food_delivery/Shared/Constants/Constants.dart';
 import 'package:food_delivery/Shared/Network/Local/CacheHelper.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
-import 'package:food_delivery/utils/helper.dart';
+import 'package:food_delivery/core/utils/helper.dart';
 import 'package:get/get.dart';
 
 import 'Cubit/FoodLayoutCubit.dart';
@@ -19,7 +20,6 @@ class LayoutScreen extends StatefulWidget {
 }
 
 class _LayoutScreenState extends State<LayoutScreen> {
-  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -33,8 +33,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-          key: scaffoldKey,
-          appBar: defaultAppBar(context: context, inCartScreen: FoodLayoutCubit.get(context).inCartScreen),
+          appBar: defaultAppBar(context: context),
           body: state is FoodLayoutGetRestaurantsLoadingState
               ? Center(
                   child: CircularProgressIndicator(
@@ -45,8 +44,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
                     SliverFillRemaining(
                         fillOverscroll: true,
                         child: FoodLayoutCubit.get(context)
-                            .currentScreen /*FoodLayoutCubit.get(context)
-                            .screens[FoodLayoutCubit.get(context).currentIndex]*/
+                            .currentScreen
                         )
                   ],
                 ),

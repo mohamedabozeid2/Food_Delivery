@@ -78,7 +78,7 @@ class FoodLoginCubit extends Cubit<FoodLoginStates> {
 
   void addUserToDatabase({required String phoneNumber, required String uId}) {
     UserModel model = UserModel(
-        uId: uId, name: '', phoneNumber: phoneNumber, emailAddress: '');
+        uId: uId, name: '', phoneNumber: phoneNumber, emailAddress: '',address: '');
     FirebaseFirestore.instance.collection('users').doc(uId)
         .set(model.toMap())
         .then((value) {

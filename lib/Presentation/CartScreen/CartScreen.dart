@@ -6,7 +6,7 @@ import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubi
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
-import 'package:food_delivery/utils/helper.dart';
+import 'package:food_delivery/core/utils/helper.dart';
 
 import '../../Shared/Constants/Constants.dart';
 

@@ -40,26 +40,32 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
   ];
   int currentIndex = 0;
   bool inCartScreen = false;
+  bool inProfileScreen = false;
 
   void changeBotNavBar({required int index, required BuildContext context}) {
     if (index == 0) {
       currentIndex = index;
+      inProfileScreen = false;
       inCartScreen = false;
       currentScreen = HomeScreen();
     } else if (index == 1) {
       currentIndex = index;
       inCartScreen = false;
+      inProfileScreen = false;
       currentScreen = FavoriteScreen();
     } else if (index == 2) {
       currentIndex = index;
+      inProfileScreen = false;
       inCartScreen = false;
       currentScreen = MyOrdersScreen();
     } else if (index == 3) {
       currentIndex = index;
       inCartScreen = false;
+      inProfileScreen = true;
       currentScreen = ProfileScreen();
     } else {
       inCartScreen = true;
+      inProfileScreen = false;
       currentScreen = CartScreen();
     }
     emit(FoodLayoutChangeBotNavBarState());

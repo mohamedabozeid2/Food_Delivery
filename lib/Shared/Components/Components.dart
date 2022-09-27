@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 
-import '../../utils/helper.dart';
+import '../../core/utils/helper.dart';
 
 Widget myDivider(
     {required Color color,

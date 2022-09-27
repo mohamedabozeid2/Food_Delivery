@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/Presentation/LoginScreen/LoginScreen.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
-import 'package:food_delivery/utils/helper.dart';
+import 'package:food_delivery/core/utils/helper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../DataModels/BoadingModel.dart';
