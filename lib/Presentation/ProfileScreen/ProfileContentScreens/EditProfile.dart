@@ -126,10 +126,6 @@ class _EditProfileState extends State<EditProfile> {
                         : defaultButton(
                             text: 'Save',
                             fun: () {
-                              print('//////////////////');
-                              print('+20${phoneController.text}');
-                              print(userModel!.phoneNumber);
-                              print('//////////////////');
                               if ('+20${phoneController.text}' ==
                                   userModel!.phoneNumber) {
                                 FoodLayoutCubit.get(context).updateUserData(

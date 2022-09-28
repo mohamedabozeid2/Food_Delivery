@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/Shared/Components/Components.dart';
 
 class InviteScreen extends StatelessWidget {
   const InviteScreen({Key? key}) : super(key: key);
@@ -6,11 +7,7 @@ class InviteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Invite & Share app'
-        ),
-      ),
+      appBar: profileContentAppBar(context: context, title: 'Invite & Share')
     );
   }
 }

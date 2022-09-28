@@ -362,8 +362,6 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
       uId = value.user!.uid;
       CacheHelper.saveData(key: 'uId', value: uId);
       CacheHelper.saveData(key: 'loggedIn', value: true);
-      print('////////////////////////////////////////////test here ya bro');
-      print(value.user!.phoneNumber!);
       if (fromUpdate) {
         updateUserData(
             name: name,
@@ -401,7 +399,6 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
 
   void getUserData() {
     emit(FoodLayoutGetUserDataLoadingState());
-    print('///////////////////////');
     FirebaseFirestore.instance.collection('users').doc(uId).get().then((value) {
       userModel = UserModel.fromJson(value.data()!);
       emit(FoodLayoutGetUserDataSuccessState());

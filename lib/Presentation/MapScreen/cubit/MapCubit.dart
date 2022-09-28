@@ -43,7 +43,7 @@ class MapCubit extends Cubit<MapStates> {
       // location.changeSettings(
       //   accuracy: LocationAccuracy.high
       // );
-      userMarker = Marker(
+      userMarker = const Marker(
           markerId: MarkerId('My Location'),
           position: LatLng(31.1474592, 30.1126402),
           icon: BitmapDescriptor.defaultMarker,
