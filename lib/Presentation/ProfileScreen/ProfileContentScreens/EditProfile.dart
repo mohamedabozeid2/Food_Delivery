@@ -111,7 +111,6 @@ class _EditProfileState extends State<EditProfile> {
                     textFormFieldWithHint(
                         context: context,
                         controller: emailController,
-                        prefixWidget: const Text('+20'),
                         label: userModel!.emailAddress!,
                         borderColor: greyTextColor,
                         paddingInside: 5,

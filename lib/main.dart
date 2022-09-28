@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget {
         locale: Locale(selectedLanguage),
         translations: MyLocale(),
         themeMode: ThemeMode.light,
-        home: LoginScreen(),
+        home: startWidget,
       ),
     );
   }
