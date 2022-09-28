@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -78,7 +77,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => MapCubit()),
-        BlocProvider(create: (context) => FoodLoginCubit()),
+        BlocProvider(create: (context) => FoodLoginCubit()..getUserData()),
         BlocProvider(create: (context) => FoodLayoutCubit()),
       ],
       child: GetMaterialApp(

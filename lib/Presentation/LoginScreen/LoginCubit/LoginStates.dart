@@ -9,6 +9,12 @@ class FoodSendPhoneAuthenticationErrorState extends FoodLoginStates{
   FoodSendPhoneAuthenticationErrorState({required this.error});
 }
 
+
+class FoodLayoutGetUserDataLoadingState extends FoodLoginStates{}
+class FoodLayoutGetUserDataSuccessState extends FoodLoginStates{}
+class FoodLayoutGetUserDataErrorState extends FoodLoginStates{}
+
+
 class FoodVerifyPhoneLoadingState extends FoodLoginStates{}
 class FoodVerifyPhoneSuccessState extends FoodLoginStates{}
 class FoodVerifyPhoneErrorState extends FoodLoginStates{

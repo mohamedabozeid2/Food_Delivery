@@ -22,29 +22,29 @@ class FoodLoginCubit extends Cubit<FoodLoginStates> {
     emit(FoodSendPhoneAuthenticationLoadingState());
     await FirebaseAuth.instance
         .verifyPhoneNumber(
-        phoneNumber: '+20$phoneNumber}',
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          print('completed');
-          // await FirebaseAuth.instance.signInWithCredential(credential).then((value){
-          //   print(value.credential!.providerId);
-          //   print(value.credential!.signInMethod);
-          //   print(value.credential!.token);
-          //     print('user logged in');
-          //   }
-          // }).catchError((error){
-          //   print('NEWWW ERROR ===> ${error.toString()}');
-          // });
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          Get.snackbar('Food Delivery', '${e.message}');
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          verificationCode = verificationId;
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          verificationCode = verificationId;
-        },
-        timeout: const Duration(seconds: 60))
+            phoneNumber: '+20$phoneNumber}',
+            verificationCompleted: (PhoneAuthCredential credential) async {
+              print('completed');
+              // await FirebaseAuth.instance.signInWithCredential(credential).then((value){
+              //   print(value.credential!.providerId);
+              //   print(value.credential!.signInMethod);
+              //   print(value.credential!.token);
+              //     print('user logged in');
+              //   }
+              // }).catchError((error){
+              //   print('NEWWW ERROR ===> ${error.toString()}');
+              // });
+            },
+            verificationFailed: (FirebaseAuthException e) {
+              Get.snackbar('Food Delivery', '${e.message}');
+            },
+            codeSent: (String verificationId, int? resendToken) {
+              verificationCode = verificationId;
+            },
+            codeAutoRetrievalTimeout: (String verificationId) {
+              verificationCode = verificationId;
+            },
+            timeout: const Duration(seconds: 60))
         .then((value) {
       emit(FoodSendPhoneAuthenticationSuccessState());
     }).catchError((error) {
@@ -57,7 +57,7 @@ class FoodLoginCubit extends Cubit<FoodLoginStates> {
     emit(FoodVerifyPhoneLoadingState());
     FirebaseAuth.instance
         .signInWithCredential(PhoneAuthProvider.credential(
-        verificationId: verificationCode!, smsCode: pin))
+            verificationId: verificationCode!, smsCode: pin))
         .then((value) async {
       Get.snackbar('Food Delivery', 'Done',
           colorText: Colors.white, backgroundColor: Colors.green);
@@ -78,13 +78,29 @@ class FoodLoginCubit extends Cubit<FoodLoginStates> {
 
   void addUserToDatabase({required String phoneNumber, required String uId}) {
     UserModel model = UserModel(
-        uId: uId, name: '', phoneNumber: phoneNumber, emailAddress: '',address: '');
-    FirebaseFirestore.instance.collection('users').doc(uId)
+        uId: uId,
+        name: '',
+        phoneNumber: phoneNumber,
+        emailAddress: '',
+        address: '');
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
         .set(model.toMap())
-        .then((value) {
+        .then((value){
+      getUserData();
+    })
+        .catchError((error) {});
+  }
 
+  void getUserData() {
+    emit(FoodLayoutGetUserDataLoadingState());
+    FirebaseFirestore.instance.collection('users').doc(uId).get().then((value) {
+      userModel = UserModel.fromJson(value.data()!);
+      emit(FoodLayoutGetUserDataSuccessState());
     }).catchError((error) {
-
+      debugPrint('Error fro get user data ====> ${error.toString()}');
+      emit(FoodLayoutGetUserDataErrorState());
     });
   }
 }
