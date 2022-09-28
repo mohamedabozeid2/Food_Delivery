@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
+import 'package:get/get.dart';
 
 import '../../../core/utils/helper.dart';
 import 'SearchBar.dart';
@@ -25,7 +26,7 @@ PreferredSizeWidget defaultAppBar(
                 child: Column(
                   children: [
                     Text(
-                      'Delivery to',
+                      'delivery_to'.tr,
                       style: Theme.of(context).textTheme.subtitle2!.copyWith(
                             fontSize: 13.0,
                           ),

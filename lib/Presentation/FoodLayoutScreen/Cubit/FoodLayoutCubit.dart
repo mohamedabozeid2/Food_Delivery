@@ -8,11 +8,8 @@ import 'package:food_delivery/Presentation/FavoriteScreen/FavoriteScreen.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
 import 'package:food_delivery/Presentation/MyOrdersScreen/MyOrdersScreen.dart';
 import 'package:food_delivery/Presentation/ProfileScreen/ProfileScreen.dart';
-import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/Shared/Constants/Constants.dart';
-import 'package:food_delivery/Shared/styles/Themes.dart';
 import 'package:get/get.dart';
-
 import '../../../DataModels/CartModel.dart';
 import '../../../DataModels/MealContentModel.dart';
 import '../../../DataModels/RestaurantModel.dart';

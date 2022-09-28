@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
+import 'package:get/get.dart';
 
 class SearchBar extends StatelessWidget {
   var searchController = TextEditingController();
@@ -11,7 +12,7 @@ class SearchBar extends StatelessWidget {
       child: textFormFieldWithHint(
           context: context,
           controller: searchController,
-          label: 'Search',
+          label: 'search'.tr,
           borderRadius: 20.0,
           prefixIcon: const Icon(Icons.search),
 

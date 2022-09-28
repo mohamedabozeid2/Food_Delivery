@@ -21,6 +21,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<FoodLayoutCubit, FoodLayoutStates>(
@@ -43,24 +48,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const SizedBox(
                       height: 10.0,
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          userModel!.phoneNumber!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .caption!
-                              .copyWith(fontSize: 16.0),
-                        ),
-                        const Spacer(),
-                        Text(
-                          'Edit',
-                          style: Theme.of(context)
-                              .textTheme
-                              .caption!
-                              .copyWith(fontSize: 16.0),
-                        ),
-                      ],
+                    GestureDetector(
+                      onTap: (){
+
+                      },
+                      child: Row(
+                        children: [
+                          Text(
+                            userModel!.phoneNumber!,
+                            style: Theme.of(context)
+                                .textTheme
+                                .caption!
+                                .copyWith(fontSize: 16.0),
+                          ),
+                          const Spacer(),
+                          Text(
+                            'Edit',
+                            style: Theme.of(context)
+                                .textTheme
+                                .caption!
+                                .copyWith(fontSize: 16.0),
+                          ),
+                        ],
+                      ),
                     ),
                     Text(
                       userModel!.emailAddress!.isNotEmpty
@@ -93,7 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: settingsItemBuilder(
                           icon: Icons.language,
                           text: 'Change Language',
-                          screen: LanguageScreen(),
+                          screen: ChangeLanguageScreen(),
                           context: context),
                     ),
                     Padding(

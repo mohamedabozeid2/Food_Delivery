@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/Locale/Locale.dart';
+import 'package:food_delivery/Locale/LocaleController.dart';
 import 'package:food_delivery/Presentation/LoginScreen/LoginCubit/LoginCubit.dart';
 import 'package:food_delivery/Presentation/LoginScreen/LoginScreen.dart';
 import 'package:food_delivery/Presentation/MapScreen/cubit/MapCubit.dart';
@@ -30,6 +32,8 @@ void main() async {
       statusBarIconBrightness: Brightness.dark // tus bar color
       ));
 
+  ////////////// Local Database/////////////////
+
   await CacheHelper.init();
   Widget startWidget;
   if (CacheHelper.getData(key: 'onBoarding') == null) {
@@ -38,8 +42,13 @@ void main() async {
     onBoarding = true;
   }
 
+  selectedLanguage = CacheHelper.getData(key: 'language');
+  if(selectedLanguage == null){
+    selectedLanguage = 'en';
+    CacheHelper.saveData(key: 'language', value: 'en');
+  }
+
   uId = CacheHelper.getData(key: 'uId');
-  print("UIDBRO ${uId}");
   if (CacheHelper.getData(key: 'loggedIn') == null) {
     loggedIn = false;
   } else if (CacheHelper.getData(key: 'loggedIn') == false) {
@@ -57,6 +66,9 @@ void main() async {
   } else {
     startWidget = OnBoardingScreen();
   }
+
+
+  /////////////////////////////////////
   BlocOverrides.runZoned(
     () {
       runApp(MyApp(
@@ -74,6 +86,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(MyLocaleController());
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => MapCubit()),
@@ -84,6 +97,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Food Delivery',
         theme: lightTheme,
+        locale: Locale(selectedLanguage),
+        translations: MyLocale(),
         themeMode: ThemeMode.light,
         home: startWidget,
       ),

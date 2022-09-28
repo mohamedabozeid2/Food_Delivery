@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/Presentation/CartScreen/CartScreen.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Widgets/AppBar.dart';
+import 'package:food_delivery/Presentation/LoginScreen/LoginCubit/LoginCubit.dart';
 
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/Shared/Constants/Constants.dart';
@@ -12,7 +13,6 @@ import 'package:get/get.dart';
 
 import 'Cubit/FoodLayoutCubit.dart';
 import 'Cubit/FoodLayoutStates.dart';
-import 'Widgets/SearchBar.dart';
 
 class LayoutScreen extends StatefulWidget {
   @override
@@ -24,6 +24,9 @@ class _LayoutScreenState extends State<LayoutScreen> {
   @override
   void initState() {
     FoodLayoutCubit.get(context).getRestaurants();
+    if(userModel == null){
+      FoodLoginCubit.get(context).getUserData();
+    }
     super.initState();
   }
 
