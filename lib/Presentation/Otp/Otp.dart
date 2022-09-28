@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_delivery/Presentation/LoginScreen/LoginCubit/LoginCubit.dart';
+import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
 import 'package:food_delivery/Presentation/Otp/Pinput.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
-import 'package:food_delivery/Shared/Constants/Constants.dart';
-import 'package:pinput/pinput.dart';
 
-import '../LoginScreen/LoginCubit/LoginStates.dart';
+import '../FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
 
 class OtpScreen extends StatefulWidget {
+  final bool fromUpdate;
+  final String name;
+  final String phone;
+  final String email;
+
+  OtpScreen(
+      {required this.fromUpdate,
+      required this.email,
+      required this.phone,
+      required this.name});
+
   @override
   State<OtpScreen> createState() => _OtpScreenState();
 }
@@ -21,7 +30,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<FoodLoginCubit, FoodLoginStates>(
+    return BlocConsumer<FoodLayoutCubit, FoodLayoutStates>(
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
@@ -50,8 +59,12 @@ class _OtpScreenState extends State<OtpScreen> {
                     style: Theme.of(context).textTheme.subtitle2,
                   ),
                   PinputWidget(
+                      name: widget.name,
+                      phone: widget.phone,
+                      email: widget.email,
                       authenticationCode:
-                          FoodLoginCubit.get(context).verificationCode!),
+                          FoodLayoutCubit.get(context).verificationCode!,
+                      fromUpdate: widget.fromUpdate),
                 ],
               ),
             ),

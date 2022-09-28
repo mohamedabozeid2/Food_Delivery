@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/Locale/Locale.dart';
 import 'package:food_delivery/Locale/LocaleController.dart';
-import 'package:food_delivery/Presentation/LoginScreen/LoginCubit/LoginCubit.dart';
 import 'package:food_delivery/Presentation/LoginScreen/LoginScreen.dart';
 import 'package:food_delivery/Presentation/MapScreen/cubit/MapCubit.dart';
 import 'package:food_delivery/Shared/Constants/Constants.dart';
@@ -42,10 +41,11 @@ void main() async {
     onBoarding = true;
   }
 
-  selectedLanguage = CacheHelper.getData(key: 'language');
-  if(selectedLanguage == null){
+  if(CacheHelper.getData(key: 'language') == null){
     selectedLanguage = 'en';
     CacheHelper.saveData(key: 'language', value: 'en');
+  }else{
+    selectedLanguage = CacheHelper.getData(key: 'language');
   }
 
   uId = CacheHelper.getData(key: 'uId');
@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => MapCubit()),
-        BlocProvider(create: (context) => FoodLoginCubit()..getUserData()),
+        // BlocProvider(create: (context) => FoodLoginCubit()),
         BlocProvider(create: (context) => FoodLayoutCubit()),
       ],
       child: GetMaterialApp(
@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget {
         locale: Locale(selectedLanguage),
         translations: MyLocale(),
         themeMode: ThemeMode.light,
-        home: startWidget,
+        home: LoginScreen(),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_delivery/Locale/LocaleController.dart';
+import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/Shared/Constants/Constants.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 import 'package:get/get.dart';
@@ -11,23 +12,7 @@ class ChangeLanguageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     MyLocaleController localeController = Get.find();
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.black,
-          ),
-        ),
-        title: Text(
-          'Change Language',
-          style: Theme.of(context).textTheme.bodyText2!.copyWith(
-              color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w600),
-        ),
-      ),
+      appBar: profileContentAppBar(context: context, title: 'Change Language'),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(

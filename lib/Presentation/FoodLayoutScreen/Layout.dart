@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_delivery/Presentation/CartScreen/CartScreen.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Widgets/AppBar.dart';
-import 'package:food_delivery/Presentation/LoginScreen/LoginCubit/LoginCubit.dart';
-
-import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/Shared/Constants/Constants.dart';
-import 'package:food_delivery/Shared/Network/Local/CacheHelper.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
-import 'package:food_delivery/core/utils/helper.dart';
-import 'package:get/get.dart';
 
 import 'Cubit/FoodLayoutCubit.dart';
 import 'Cubit/FoodLayoutStates.dart';
@@ -25,7 +18,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
   void initState() {
     FoodLayoutCubit.get(context).getRestaurants();
     if(userModel == null){
-      FoodLoginCubit.get(context).getUserData();
+      FoodLayoutCubit.get(context).getUserData();
     }
     super.initState();
   }
@@ -37,7 +30,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
       builder: (context, state) {
         return Scaffold(
           appBar: defaultAppBar(context: context),
-          body: state is FoodLayoutGetRestaurantsLoadingState
+          body: state is FoodLayoutGetRestaurantsLoadingState || state is FoodLayoutGetUserDataLoadingState
               ? Center(
                   child: CircularProgressIndicator(
                   color: mainColor,

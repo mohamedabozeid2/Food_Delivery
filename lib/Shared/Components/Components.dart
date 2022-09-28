@@ -76,6 +76,29 @@ Widget defaultButton({
   );
 }
 
+PreferredSizeWidget profileContentAppBar({
+  required BuildContext context,
+  required String title,
+}){
+  return AppBar(
+    centerTitle: true,
+    leading: IconButton(
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      icon: const Icon(
+        Icons.arrow_back_ios,
+        color: Colors.black,
+      ),
+    ),
+    title: Text(
+      title,
+      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+          color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w600),
+    ),
+  );
+}
+
 Widget defaultTextButton(
     {required String text,
     required fun,
@@ -186,9 +209,7 @@ Widget textFormFieldWithHint({
       }
     },
     style: TextStyle(color: mainColor),
-    onChanged: (value) {
-      print(value);
-    },
+    onChanged: (value) {},
     decoration: InputDecoration(
         fillColor: Colors.transparent,
         filled: true,

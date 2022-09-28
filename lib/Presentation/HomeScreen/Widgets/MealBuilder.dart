@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
-import 'package:food_delivery/Presentation/LoginScreen/LoginCubit/LoginStates.dart';
 
 import '../../../DataModels/MealModel.dart';
 import '../../../Shared/Components/Components.dart';

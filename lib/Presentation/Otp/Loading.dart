@@ -2,16 +2,24 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_delivery/Presentation/LoginScreen/LoginCubit/LoginCubit.dart';
-import 'package:food_delivery/Presentation/LoginScreen/LoginCubit/LoginStates.dart';
+import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
 import 'package:food_delivery/Presentation/Otp/Otp.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:lottie/lottie.dart';
 
+import '../FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
+
 class LoadingScreen extends StatefulWidget {
   final String phoneNumber;
+  final bool fromUpdate;
+  final String name;
+  final String emailAddress;
 
-  LoadingScreen({required this.phoneNumber});
+  LoadingScreen(
+      {required this.phoneNumber,
+      required this.fromUpdate,
+      required this.name,
+      required this.emailAddress});
 
   @override
   State<LoadingScreen> createState() => _LoadingScreenState();
@@ -21,13 +29,20 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
-    FoodLoginCubit.get(context)
-        .sendPhoneAuthenticationCode(phoneNumber: widget.phoneNumber);
+    FoodLayoutCubit.get(context).sendPhoneAuthenticationCode(
+        phoneNumber: widget.phoneNumber, context: context);
     Timer.periodic(
-      Duration(seconds: 2),
+      const Duration(seconds: 2),
       (timer) {
-        if (FoodLoginCubit.get(context).verificationCode != null) {
-          navigateAndFinish(context: context, widget: OtpScreen());
+        if (FoodLayoutCubit.get(context).verificationCode != null) {
+          navigateAndFinish(
+              context: context,
+              widget: OtpScreen(
+                name: widget.name,
+                phone: widget.phoneNumber,
+                email: widget.emailAddress,
+                fromUpdate: widget.fromUpdate,
+              ));
           timer.cancel();
         }
       },
@@ -38,7 +53,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<FoodLoginCubit, FoodLoginStates>(
+    return BlocConsumer<FoodLayoutCubit, FoodLayoutStates>(
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(

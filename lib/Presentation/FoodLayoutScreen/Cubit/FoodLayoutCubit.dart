@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:food_delivery/DataModels/MealModel.dart';
+import 'package:food_delivery/DataModels/UserModel.dart';
 import 'package:food_delivery/Presentation/CartScreen/CartScreen.dart';
 import 'package:food_delivery/Presentation/FavoriteScreen/FavoriteScreen.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
@@ -14,6 +16,7 @@ import '../../../DataModels/CartModel.dart';
 import '../../../DataModels/MealContentModel.dart';
 import '../../../DataModels/RestaurantModel.dart';
 import '../../../DataModels/TagsModel.dart';
+import '../../../Shared/Network/Local/CacheHelper.dart';
 import '../../HomeScreen/HomeScreen.dart';
 
 class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
@@ -160,12 +163,36 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
     });
   }
 
+  void updateUserData(
+      {required String name,
+      required String phoneNumber,
+      required String emailAddress,
+      required BuildContext context}) {
+    emit(FoodLayoutUpdateUserDataLoadingState());
+    UserModel model = UserModel(
+        uId: uId,
+        address: userModel!.address,
+        name: name,
+        phoneNumber: phoneNumber,
+        emailAddress: emailAddress);
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .update(model.toMap())
+        .then((value) {
+      getUserData();
+      emit(FoodLayoutUpdateUserDataSuccessState());
+    }).catchError((error) {
+      debugPrint('Error from update user data ====> ${error.toString()}');
+      emit(FoodLayoutUpdateUserDataErrorState());
+    });
+  }
 
-
-  void removeFromCart({required int index}){
+  void removeFromCart({required int index}) {
     cartModelList.removeAt(index);
     calcCheckPrice(cartModelList: cartModelList);
   }
+
   void getMealContent(
       {required String restaurantDoc, required String mealDoc}) {
     mealContentList = [];
@@ -217,13 +244,12 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
     });
   }
 
-  void calcCheckPrice({required List<CartModel> cartModelList}){
+  void calcCheckPrice({required List<CartModel> cartModelList}) {
     totalCartPrice = 0;
-    for(int i=0; i<cartModelList.length; i++){
+    for (int i = 0; i < cartModelList.length; i++) {
       totalCartPrice += cartModelList[i].totalPrice;
     }
     emit(FoodCalcPriceState());
-
   }
 
   dynamic calcTotalPrice({
@@ -277,5 +303,111 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
         getFav(fromAddFav: true);
       });
     }
+  }
+
+  String? verificationCode;
+  void sendPhoneAuthenticationCode({
+    required String phoneNumber,
+    required BuildContext context,
+  }) async {
+    emit(FoodSendPhoneAuthenticationLoadingState());
+    await FirebaseAuth.instance
+        .verifyPhoneNumber(
+        phoneNumber: '+20$phoneNumber}',
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          print('completed');
+          // await FirebaseAuth.instance.signInWithCredential(credential).then((value){
+          //   print(value.credential!.providerId);
+          //   print(value.credential!.signInMethod);
+          //   print(value.credential!.token);
+          //     print('user logged in');
+          //   }
+          // }).catchError((error){
+          //   print('NEWWW ERROR ===> ${error.toString()}');
+          // });
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          Get.snackbar('Food Delivery', '${e.message}testttt');
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          verificationCode = verificationId;
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          verificationCode = verificationId;
+        },
+        timeout: const Duration(seconds: 60))
+        .then((value) {
+      emit(FoodSendPhoneAuthenticationSuccessState());
+    }).catchError((error) {
+      print('error in verify phone ===> ${error.toString()}');
+      emit(FoodSendPhoneAuthenticationErrorState(error: error.toString()));
+    });
+  }
+
+  void phoneAuthentication(
+      {required String pin,
+        required BuildContext context,
+        required bool fromUpdate,
+        required String name,
+        required String email,
+        required String phone}) {
+    emit(FoodVerifyPhoneLoadingState());
+    FirebaseAuth.instance
+        .signInWithCredential(PhoneAuthProvider.credential(
+        verificationId: verificationCode!, smsCode: pin))
+        .then((value) async {
+      Get.snackbar('Food Delivery', 'Done',
+          colorText: Colors.white, backgroundColor: Colors.green);
+      loggedIn = true;
+      uId = value.user!.uid;
+      CacheHelper.saveData(key: 'uId', value: uId);
+      CacheHelper.saveData(key: 'loggedIn', value: true);
+      print('////////////////////////////////////////////test here ya bro');
+      print(value.user!.phoneNumber!);
+      if (fromUpdate) {
+        updateUserData(
+            name: name,
+            phoneNumber: value.user!.phoneNumber!, //+201200808853
+            emailAddress: email,
+            context: context);
+      } else {
+        addUserToDatabase(
+            phoneNumber: value.user!.phoneNumber!, uId: value.user!.uid);
+      }
+      emit(FoodVerifyPhoneSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      Get.snackbar('Food Delivery', 'Wrong Code',
+          backgroundColor: Colors.red, colorText: Colors.white);
+      emit(FoodVerifyPhoneErrorState(error: error.toString()));
+    });
+  }
+
+  void addUserToDatabase({required String phoneNumber, required String uId}) {
+    UserModel model = UserModel(
+        uId: uId,
+        name: '',
+        phoneNumber: phoneNumber,
+        emailAddress: '',
+        address: '');
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .set(model.toMap())
+        .then((value) {
+      getUserData();
+    }).catchError((error) {});
+  }
+
+  void getUserData() {
+    emit(FoodLayoutGetUserDataLoadingState());
+    print('///////////////////////');
+    FirebaseFirestore.instance.collection('users').doc(uId).get().then((value) {
+      userModel = UserModel.fromJson(value.data()!);
+      emit(FoodLayoutGetUserDataSuccessState());
+    }).catchError((error) {
+      debugPrint('Error fro get user data ====> ${error.toString()}');
+      emit(FoodLayoutGetUserDataErrorState());
+    });
   }
 }

@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
+import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
 import 'package:food_delivery/Presentation/Otp/Loading.dart';
-import 'package:food_delivery/Presentation/Otp/Otp.dart';
-import 'package:get/get.dart';
+
 
 import '../../Shared/Components/Components.dart';
 import '../../Shared/styles/Themes.dart';
-import '../../core/utils/helper.dart';
-import 'LoginCubit/LoginCubit.dart';
-import 'LoginCubit/LoginStates.dart';
 
 class LoginScreen extends StatelessWidget {
   var phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<FoodLoginCubit, FoodLoginStates>(
+    return BlocConsumer<FoodLayoutCubit, FoodLayoutStates>(
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
@@ -27,8 +25,7 @@ class LoginScreen extends StatelessWidget {
               children: [
                 Align(
                     alignment: Alignment.center,
-                    child: logoDisplay(context: context)
-                ),
+                    child: logoDisplay(context: context)),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Text(
@@ -55,25 +52,30 @@ class LoginScreen extends StatelessWidget {
                     controller: phoneController,
                     label: ' Mobile Number',
                     type: TextInputType.phone,
-                    prefixWidget: Text('+20'),
+                    prefixWidget: const Text('+20'),
                     prefixIcon: Icon(Icons.phone, color: mainColor),
                   ),
                 ),
                 const SizedBox(
                   height: 25.0,
                 ),
-                state is FoodSendPhoneAuthenticationLoadingState ? const Center(child: CircularProgressIndicator()) :defaultButton(
-                    text: 'Log in',
-                    fun: () {
-                      navigateAndFinish(context: context, widget: LoadingScreen(phoneNumber: phoneController.text));
-                      // navigateAndFinish(context: context, widget: OtpScreen(phoneNumber: phoneController.text));
-                      // FoodLoginCubit.get(context).phoneAuthentication(
-                      //     phoneNumber: phoneController.text);
-                    },
-                    height: 50.0,
-                    TextColor: Colors.white,
-                    borderRadius: 5.0,
-                    backgroundColor: mainColor)
+                state is FoodSendPhoneAuthenticationLoadingState
+                    ? const Center(child: CircularProgressIndicator())
+                    : defaultButton(
+                        text: 'Log in',
+                        fun: () {
+                          navigateAndFinish(
+                              context: context,
+                              widget: LoadingScreen(
+                                  fromUpdate: false,
+                                  name: 'User Name',
+                                  emailAddress: 'Email Address',
+                                  phoneNumber: phoneController.text));
+                        },
+                        height: 50.0,
+                        TextColor: Colors.white,
+                        borderRadius: 5.0,
+                        backgroundColor: mainColor)
               ],
             ),
           ),

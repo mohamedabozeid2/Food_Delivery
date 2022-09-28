@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
 import 'package:food_delivery/Presentation/ProfileScreen/ProfileContentScreens/AboutUsScreen.dart';
+import 'package:food_delivery/Presentation/ProfileScreen/ProfileContentScreens/EditProfile.dart';
 import 'package:food_delivery/Presentation/ProfileScreen/ProfileContentScreens/InviteScreen.dart';
 import 'package:food_delivery/Presentation/ProfileScreen/ProfileContentScreens/LanguageScreen.dart';
 import 'package:food_delivery/Presentation/ProfileScreen/ProfileContentScreens/MyAddressScreen.dart';
@@ -39,48 +40,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      userModel!.name!.isEmpty ? 'User Name' : userModel!.name!,
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            color: mainColor,
-                          ),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
+
                     GestureDetector(
                       onTap: (){
-
+                        navigateTo(context, EditProfile());
                       },
-                      child: Row(
-                        children: [
-                          Text(
-                            userModel!.phoneNumber!,
-                            style: Theme.of(context)
-                                .textTheme
-                                .caption!
-                                .copyWith(fontSize: 16.0),
-                          ),
-                          const Spacer(),
-                          Text(
-                            'Edit',
-                            style: Theme.of(context)
-                                .textTheme
-                                .caption!
-                                .copyWith(fontSize: 16.0),
-                          ),
-                        ],
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              userModel!.name!.isEmpty ? 'User Name' : userModel!.name!,
+                              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                                color: mainColor,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  userModel!.phoneNumber!,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption!
+                                      .copyWith(fontSize: 16.0),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  'Edit',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption!
+                                      .copyWith(fontSize: 16.0),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              userModel!.emailAddress!.isNotEmpty
+                                  ? userModel!.emailAddress!
+                                  : "No Email",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .caption!
+                                  .copyWith(fontSize: 14.0),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    Text(
-                      userModel!.emailAddress!.isNotEmpty
-                          ? userModel!.emailAddress!
-                          : "No Email",
-                      style: Theme.of(context)
-                          .textTheme
-                          .caption!
-                          .copyWith(fontSize: 14.0),
-                    ),
+
                     myDivider(color: greyTextColor, paddingVertical: 20),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
