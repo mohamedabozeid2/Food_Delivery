@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/Locale/Locale.dart';
 import 'package:food_delivery/Locale/LocaleController.dart';
 import 'package:food_delivery/Presentation/LoginScreen/LoginScreen.dart';
-import 'package:food_delivery/Presentation/MapScreen/cubit/MapCubit.dart';
 import 'package:food_delivery/Shared/Constants/Constants.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 import 'package:get/get.dart';

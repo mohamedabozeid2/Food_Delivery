@@ -8,8 +8,10 @@ import 'package:food_delivery/DataModels/UserModel.dart';
 import 'package:food_delivery/Presentation/CartScreen/CartScreen.dart';
 import 'package:food_delivery/Presentation/FavoriteScreen/FavoriteScreen.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
+import 'package:food_delivery/Presentation/FoodLayoutScreen/Layout.dart';
 import 'package:food_delivery/Presentation/MyOrdersScreen/MyOrdersScreen.dart';
 import 'package:food_delivery/Presentation/ProfileScreen/ProfileScreen.dart';
+import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/Shared/Constants/Constants.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -170,6 +172,7 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
       required String phoneNumber,
       required String emailAddress,
       required String address,
+      bool fromMaps = false,
       required BuildContext context}) {
     emit(FoodLayoutUpdateUserDataLoadingState());
     UserModel model = UserModel(
@@ -183,7 +186,7 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
         .doc(uId)
         .update(model.toMap())
         .then((value) {
-      getUserData(fromUpdateData: true);
+      getUserData(fromUpdateData: true, fromMaps: fromMaps,context: context);
     }).catchError((error) {
       debugPrint('Error from update user data ====> ${error.toString()}');
       emit(FoodLayoutUpdateUserDataErrorState());
@@ -352,7 +355,7 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
       required BuildContext context,
       required bool fromUpdate,
       required String name,
-        required String address,
+      required String address,
       required String email,
       required String phone}) {
     emit(FoodVerifyPhoneLoadingState());
@@ -370,11 +373,12 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
         updateUserData(
             name: name,
             address: address,
-            phoneNumber: value.user!.phoneNumber!, //+201200808853
+            phoneNumber: value.user!.phoneNumber!,
+            //+201200808853
             emailAddress: email,
             context: context);
       } else {
-        addUserToDatabase(
+        addUserToDatabase(context: context,
             phoneNumber: value.user!.phoneNumber!, uId: value.user!.uid);
       }
       emit(FoodVerifyPhoneSuccessState());
@@ -386,7 +390,11 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
     });
   }
 
-  void addUserToDatabase({required String phoneNumber, required String uId}) {
+  void addUserToDatabase(
+      {required String phoneNumber,
+      required String uId,
+        required BuildContext context,
+      bool fromMaps = false}) {
     UserModel model = UserModel(
         uId: uId,
         name: '',
@@ -398,16 +406,22 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
         .doc(uId)
         .set(model.toMap())
         .then((value) {
-      getUserData();
+      getUserData(fromMaps: fromMaps,context:  context);
     }).catchError((error) {});
   }
 
-  void getUserData({bool fromUpdateData = false}) {
+  void getUserData(
+      {bool fromUpdateData = false,
+      bool fromMaps = false,
+      required BuildContext context}) {
     if (!fromUpdateData) {
       emit(FoodLayoutGetUserDataLoadingState());
     }
     FirebaseFirestore.instance.collection('users').doc(uId).get().then((value) {
       userModel = UserModel.fromJson(value.data()!);
+      if (fromMaps) {
+        navigateAndFinish(context: context, widget: LayoutScreen());
+      }
       emit(FoodLayoutGetUserDataSuccessState());
     }).catchError((error) {
       debugPrint('Error fro get user data ====> ${error.toString()}');
@@ -423,7 +437,6 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
   LocationData? locationData;
   Marker? userMarker;
   CameraPosition? myPosition;
-
 
   void getUserLocation() async {
     emit(MapGetUserLocationLoadingState());
@@ -468,8 +481,6 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
 
   String address = '';
 
-
-
   Future<bool> isServiceEnabled() async {
     serviceEnabled = await location.serviceEnabled();
     if (!serviceEnabled) {
@@ -477,6 +488,4 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
     }
     return serviceEnabled;
   }
-
-
 }

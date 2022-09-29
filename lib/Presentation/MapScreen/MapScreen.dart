@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
@@ -178,6 +177,7 @@ class MapSampleState extends State<MapSample> {
     FoodLayoutCubit.get(context).updateUserData(
         name: userModel!.name!,
         address: widget.address,
+        fromMaps: true,
         phoneNumber: userModel!.phoneNumber!,
         emailAddress: userModel!.emailAddress!,
         context: context);

@@ -18,7 +18,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
   void initState() {
     FoodLayoutCubit.get(context).getRestaurants();
     if(userModel == null){
-      FoodLayoutCubit.get(context).getUserData();
+      FoodLayoutCubit.get(context).getUserData(context: context);
     }
     super.initState();
   }
