@@ -34,11 +34,11 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return BlocConsumer<FoodLayoutCubit, FoodLayoutStates>(
       listener: (context, state) {
-        if (state is FoodLayoutUpdateUserDataSuccessState) {
+        if (state is FoodLayoutUpdateUserDataSuccessState || state is FoodLayoutGetUserDataSuccessState) {
           Get.snackbar('Food Delivery', 'Updated successfully',
               colorText: Colors.white, backgroundColor: Colors.green);
           Navigator.pop(context);
-        } else if (state is FoodLayoutUpdateUserDataErrorState) {
+        } else if (state is FoodLayoutUpdateUserDataErrorState || state is FoodLayoutGetUserDataErrorState) {
           Get.snackbar('Food Delivery', 'Update failed',
               colorText: Colors.white, backgroundColor: Colors.redAccent);
         }
