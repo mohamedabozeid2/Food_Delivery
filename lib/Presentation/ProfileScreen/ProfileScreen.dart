@@ -13,6 +13,7 @@ import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/Shared/Constants/Constants.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 import 'package:food_delivery/core/utils/helper.dart';
+import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       listener: (context, state) {},
       builder: (context, state) {
         return SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
               width: Helper.getScreenWidth(context: context) * 0.95,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -70,7 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  'Edit',
+                                  'edit'.tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .caption!
@@ -97,7 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: settingsItemBuilder(
                           icon: Icons.credit_card,
-                          text: 'Payment Method',
+                          text: 'payment_method'.tr,
                           screen: PaymentScreen(),
                           context: context),
                     ),
@@ -105,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: settingsItemBuilder(
                           icon: Icons.location_on,
-                          text: 'My Address',
+                          text: 'my_address'.tr,
                           screen: MyAddressScreen(),
                           context: context),
                     ),
@@ -113,7 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: settingsItemBuilder(
                           icon: Icons.language,
-                          text: 'Change Language',
+                          text: 'change_language'.tr,
                           screen: ChangeLanguageScreen(),
                           context: context),
                     ),
@@ -121,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: settingsItemBuilder(
                           icon: Icons.info_outline,
-                          text: 'About Us',
+                          text: 'about_us'.tr,
                           screen: AboutUsScreen(),
                           context: context),
                     ),
@@ -129,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: settingsItemBuilder(
                           icon: Icons.share,
-                          text: 'Invite & Share app',
+                          text: 'invite_and_share'.tr,
                           screen: InviteScreen(),
                           context: context),
                     )

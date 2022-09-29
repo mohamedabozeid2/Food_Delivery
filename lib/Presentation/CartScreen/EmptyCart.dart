@@ -6,6 +6,7 @@ import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutStat
 import 'package:food_delivery/Presentation/HomeScreen/HomeScreen.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
+import 'package:get/get.dart';
 
 class EmptyCart extends StatefulWidget {
   const EmptyCart({Key? key}) : super(key: key);
@@ -27,18 +28,18 @@ class _EmptyCartState extends State<EmptyCart> {
             const SizedBox(
               height: 15.0,
             ),
-            Text('Your cart is empty', style: Theme.of(context).textTheme.bodyText2,),
+            Text('empty_cart'.tr, style: Theme.of(context).textTheme.bodyText2,),
             const SizedBox(
               height: 10.0,
             ),
-            Text('Add something to your cart', style: Theme.of(context).textTheme.subtitle2!.copyWith(
+            Text('add_to_cart'.tr, style: Theme.of(context).textTheme.subtitle2!.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.w400
             ),),
 
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 25,horizontal: 15),
-              child: defaultButton(text: 'Back To Home', fun: (){
+              child: defaultButton(text: 'back_home'.tr, fun: (){
                 setState(() {
                   FoodLayoutCubit.get(context).changeBotNavBar(index: 0, context: context);
                 });

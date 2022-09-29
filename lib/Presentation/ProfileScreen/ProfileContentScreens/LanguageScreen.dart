@@ -6,20 +6,25 @@ import 'package:food_delivery/Shared/Constants/Constants.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 import 'package:get/get.dart';
 
-class ChangeLanguageScreen extends StatelessWidget {
+class ChangeLanguageScreen extends StatefulWidget {
 
+  @override
+  State<ChangeLanguageScreen> createState() => _ChangeLanguageScreenState();
+}
+
+class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
   @override
   Widget build(BuildContext context) {
     MyLocaleController localeController = Get.find();
     return Scaffold(
-      appBar: profileContentAppBar(context: context, title: 'Change Language'),
+      appBar: profileContentAppBar(context: context, title: 'change_language'.tr),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Select Language',
+              'select_language'.tr,
               style: Theme.of(context)
                   .textTheme
                   .subtitle2!
@@ -55,8 +60,10 @@ class ChangeLanguageScreen extends StatelessWidget {
   }) {
     return GestureDetector(
       onTap: () {
-        localeController.changeLanguage(
-            language: text == 'English' ? 'en' : 'ar');
+        setState(() {
+          localeController.changeLanguage(context: context,
+              language: text == 'English' ? 'en' : 'ar');
+        });
       },
       child: Container(
         padding: EdgeInsets.all(20.0),

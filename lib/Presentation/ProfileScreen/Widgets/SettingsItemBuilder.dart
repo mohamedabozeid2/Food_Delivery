@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
+import 'package:food_delivery/Shared/Constants/Constants.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 import 'package:food_delivery/core/utils/helper.dart';
 
@@ -16,10 +17,10 @@ Widget settingsItemBuilder(
     child: Container(
       width: Helper.getScreenWidth(context: context)*0.95,
       child: Stack(
-        alignment: Alignment.centerRight,
+        alignment: selectedLanguage == 'en' ? Alignment.centerRight : Alignment.centerLeft,
         children: [
           Align(
-            alignment: Alignment.centerLeft,
+            alignment: selectedLanguage == 'en' ? Alignment.centerLeft : Alignment.centerRight,
             child: Container(
               width: Helper.getScreenWidth(context: context)*0.85,
               padding: EdgeInsets.all(15),

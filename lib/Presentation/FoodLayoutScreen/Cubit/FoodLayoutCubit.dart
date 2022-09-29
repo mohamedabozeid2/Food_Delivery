@@ -37,7 +37,7 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
 
   Widget currentScreen = HomeScreen();
   List<String> botNavTitles = [
-    'FoodLayout',
+    'Home screen',
     'Favorite',
     'My Order',
     'Profile',
@@ -76,21 +76,21 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
   }
 
   List<BottomNavigationBarItem> bottomNavItems = [
-    const BottomNavigationBarItem(
-      icon: Icon(
+    BottomNavigationBarItem(
+      icon: const Icon(
         Icons.home,
       ),
-      label: 'FoodLayout',
+      label: 'home'.tr,
     ),
-    const BottomNavigationBarItem(
-        icon: Icon(Icons.favorite), label: 'Favorite'),
-    const BottomNavigationBarItem(
-        icon: Icon(Icons.restaurant_outlined), label: 'My Order'),
-    const BottomNavigationBarItem(
-        icon: Icon(Icons.supervised_user_circle), label: 'Profile'),
+    BottomNavigationBarItem(
+        icon: const Icon(Icons.favorite), label: 'favorite'.tr),
+    BottomNavigationBarItem(
+        icon: const Icon(Icons.restaurant_outlined), label: 'my_order'.tr),
+    BottomNavigationBarItem(
+        icon: const Icon(Icons.supervised_user_circle), label: 'profile'.tr),
   ];
 
-  List<String> sortByList = ['All', 'Near By', 'Most Popular', 'Free Delivery'];
+  List<String> sortByList = ['all'.tr, 'near_by'.tr, 'most_popular'.tr, 'free_delivery'.tr];
   List<String> foodCategories = ['All', 'Burger', 'Pizza', 'Chicken', 'Fries'];
   int foodCategoriesNavBarIndex = 0;
   int topNavBarCurrentIndex = 0;

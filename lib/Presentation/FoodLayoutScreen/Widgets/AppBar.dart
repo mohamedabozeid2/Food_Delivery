@@ -14,7 +14,7 @@ PreferredSizeWidget defaultAppBar(
     centerTitle: true,
     title: FoodLayoutCubit.get(context).inCartScreen || FoodLayoutCubit.get(context).inProfileScreen
         ? Text(
-      FoodLayoutCubit.get(context).inProfileScreen ? 'Profile' :'My Cart',
+      FoodLayoutCubit.get(context).inProfileScreen ? 'profile'.tr :'my_cart'.tr,
             style: Theme.of(context)
                 .textTheme
                 .bodyText2!

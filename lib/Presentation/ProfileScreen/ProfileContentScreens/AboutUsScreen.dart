@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
+import 'package:get/get.dart';
 
 import '../../../Shared/Components/Components.dart';
 
@@ -9,7 +10,7 @@ class AboutUsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: profileContentAppBar(context: context, title: 'About Us'),
+      appBar: profileContentAppBar(context: context, title: 'about_us'.tr),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
