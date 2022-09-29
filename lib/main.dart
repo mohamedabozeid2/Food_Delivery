@@ -89,7 +89,7 @@ class MyApp extends StatelessWidget {
     Get.put(MyLocaleController());
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => MapCubit()),
+        // BlocProvider(create: (context) => MapCubit()),
         // BlocProvider(create: (context) => FoodLoginCubit()),
         BlocProvider(create: (context) => FoodLayoutCubit()),
       ],

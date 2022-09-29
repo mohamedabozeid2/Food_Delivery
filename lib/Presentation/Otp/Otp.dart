@@ -11,11 +11,13 @@ class OtpScreen extends StatefulWidget {
   final String name;
   final String phone;
   final String email;
+  final String address;
 
   OtpScreen(
       {required this.fromUpdate,
       required this.email,
       required this.phone,
+      required this.address,
       required this.name});
 
   @override
@@ -62,6 +64,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       name: widget.name,
                       phone: widget.phone,
                       email: widget.email,
+                      address: widget.address,
                       authenticationCode:
                           FoodLayoutCubit.get(context).verificationCode!,
                       fromUpdate: widget.fromUpdate),

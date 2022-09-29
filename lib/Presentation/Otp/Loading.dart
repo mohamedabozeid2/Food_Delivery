@@ -13,12 +13,14 @@ class LoadingScreen extends StatefulWidget {
   final String phoneNumber;
   final bool fromUpdate;
   final String name;
+  final String address;
   final String emailAddress;
 
   LoadingScreen(
       {required this.phoneNumber,
       required this.fromUpdate,
       required this.name,
+      required this.address,
       required this.emailAddress});
 
   @override
@@ -39,6 +41,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
               context: context,
               widget: OtpScreen(
                 name: widget.name,
+                address: widget.address,
                 phone: widget.phoneNumber,
                 email: widget.emailAddress,
                 fromUpdate: widget.fromUpdate,

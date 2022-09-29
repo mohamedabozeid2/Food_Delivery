@@ -69,6 +69,7 @@ class LoginScreen extends StatelessWidget {
                               widget: LoadingScreen(
                                   fromUpdate: false,
                                   name: 'User Name',
+                                  address: '',
                                   emailAddress: 'Email Address',
                                   phoneNumber: phoneController.text));
                         },

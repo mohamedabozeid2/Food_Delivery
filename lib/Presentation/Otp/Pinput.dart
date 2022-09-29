@@ -11,11 +11,12 @@ class PinputWidget extends StatelessWidget {
   final String authenticationCode;
   final bool fromUpdate;
   final String name;
+  final String address;
   final String phone;
   final String email;
 
   PinputWidget(
-      {required this.authenticationCode, required this.fromUpdate, required this.name, required this.phone, required this.email});
+      {required this.authenticationCode, required this.address, required this.fromUpdate, required this.name, required this.phone, required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,7 @@ class PinputWidget extends StatelessWidget {
             FoodLayoutCubit.get(context).phoneAuthentication(
                 pin: pin,
                 fromUpdate: fromUpdate,
+                address: address,
                 context: context,
                 email: email,
                 name: name,

@@ -12,6 +12,8 @@ import 'package:food_delivery/Presentation/MyOrdersScreen/MyOrdersScreen.dart';
 import 'package:food_delivery/Presentation/ProfileScreen/ProfileScreen.dart';
 import 'package:food_delivery/Shared/Constants/Constants.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import '../../../DataModels/CartModel.dart';
 import '../../../DataModels/MealContentModel.dart';
 import '../../../DataModels/RestaurantModel.dart';
@@ -167,11 +169,12 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
       {required String name,
       required String phoneNumber,
       required String emailAddress,
+      required String address,
       required BuildContext context}) {
     emit(FoodLayoutUpdateUserDataLoadingState());
     UserModel model = UserModel(
         uId: uId,
-        address: userModel!.address,
+        address: address,
         name: name,
         phoneNumber: phoneNumber,
         emailAddress: emailAddress);
@@ -180,8 +183,7 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
         .doc(uId)
         .update(model.toMap())
         .then((value) {
-      getUserData();
-      emit(FoodLayoutUpdateUserDataSuccessState());
+      getUserData(fromUpdateData: true);
     }).catchError((error) {
       debugPrint('Error from update user data ====> ${error.toString()}');
       emit(FoodLayoutUpdateUserDataErrorState());
@@ -306,6 +308,7 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
   }
 
   String? verificationCode;
+
   void sendPhoneAuthenticationCode({
     required String phoneNumber,
     required BuildContext context,
@@ -313,29 +316,29 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
     emit(FoodSendPhoneAuthenticationLoadingState());
     await FirebaseAuth.instance
         .verifyPhoneNumber(
-        phoneNumber: '+20$phoneNumber}',
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          print('completed');
-          // await FirebaseAuth.instance.signInWithCredential(credential).then((value){
-          //   print(value.credential!.providerId);
-          //   print(value.credential!.signInMethod);
-          //   print(value.credential!.token);
-          //     print('user logged in');
-          //   }
-          // }).catchError((error){
-          //   print('NEWWW ERROR ===> ${error.toString()}');
-          // });
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          Get.snackbar('Food Delivery', '${e.message}testttt');
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          verificationCode = verificationId;
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          verificationCode = verificationId;
-        },
-        timeout: const Duration(seconds: 60))
+            phoneNumber: '+20$phoneNumber}',
+            verificationCompleted: (PhoneAuthCredential credential) async {
+              print('completed');
+              // await FirebaseAuth.instance.signInWithCredential(credential).then((value){
+              //   print(value.credential!.providerId);
+              //   print(value.credential!.signInMethod);
+              //   print(value.credential!.token);
+              //     print('user logged in');
+              //   }
+              // }).catchError((error){
+              //   print('NEWWW ERROR ===> ${error.toString()}');
+              // });
+            },
+            verificationFailed: (FirebaseAuthException e) {
+              Get.snackbar('Food Delivery', '${e.message}testttt');
+            },
+            codeSent: (String verificationId, int? resendToken) {
+              verificationCode = verificationId;
+            },
+            codeAutoRetrievalTimeout: (String verificationId) {
+              verificationCode = verificationId;
+            },
+            timeout: const Duration(seconds: 60))
         .then((value) {
       emit(FoodSendPhoneAuthenticationSuccessState());
     }).catchError((error) {
@@ -346,15 +349,16 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
 
   void phoneAuthentication(
       {required String pin,
-        required BuildContext context,
-        required bool fromUpdate,
-        required String name,
-        required String email,
-        required String phone}) {
+      required BuildContext context,
+      required bool fromUpdate,
+      required String name,
+        required String address,
+      required String email,
+      required String phone}) {
     emit(FoodVerifyPhoneLoadingState());
     FirebaseAuth.instance
         .signInWithCredential(PhoneAuthProvider.credential(
-        verificationId: verificationCode!, smsCode: pin))
+            verificationId: verificationCode!, smsCode: pin))
         .then((value) async {
       Get.snackbar('Food Delivery', 'Done',
           colorText: Colors.white, backgroundColor: Colors.green);
@@ -365,6 +369,7 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
       if (fromUpdate) {
         updateUserData(
             name: name,
+            address: address,
             phoneNumber: value.user!.phoneNumber!, //+201200808853
             emailAddress: email,
             context: context);
@@ -397,8 +402,10 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
     }).catchError((error) {});
   }
 
-  void getUserData() {
-    emit(FoodLayoutGetUserDataLoadingState());
+  void getUserData({bool fromUpdateData = false}) {
+    if (!fromUpdateData) {
+      emit(FoodLayoutGetUserDataLoadingState());
+    }
     FirebaseFirestore.instance.collection('users').doc(uId).get().then((value) {
       userModel = UserModel.fromJson(value.data()!);
       emit(FoodLayoutGetUserDataSuccessState());
@@ -407,4 +414,69 @@ class FoodLayoutCubit extends Cubit<FoodLayoutStates> {
       emit(FoodLayoutGetUserDataErrorState());
     });
   }
+
+  /////////////////////////////Maps/////////////////////////////////////
+
+  Location location = new Location();
+  late PermissionStatus permissionStatus;
+  bool serviceEnabled = false;
+  LocationData? locationData;
+  Marker? userMarker;
+  CameraPosition? myPosition;
+
+
+  void getUserLocation() async {
+    emit(MapGetUserLocationLoadingState());
+    bool permissionGranted = await isPermissionGranted().catchError((error) {
+      print('ERROR1 ${error.toString()}');
+    });
+    if (!permissionGranted) return; // user denied the permission
+    bool gpsEnabled = await isServiceEnabled().catchError((error) {
+      print('ERROR2 ${error.toString()}');
+    });
+    if (!gpsEnabled) return; //user didn't allow to open gps services
+    if (permissionGranted && gpsEnabled) {
+      locationData = await location.getLocation();
+      // location.onLocationChanged.listen((newLocation) {
+      //   locationData = newLocation;
+      //   print('Latitude2 ${locationData!.latitude}');
+      //   print('Longitude2 ${locationData!.longitude}');
+      // });
+      // location.changeSettings(
+      //   accuracy: LocationAccuracy.high
+      // );
+
+      userMarker = Marker(
+          markerId: MarkerId('My Location'),
+          position: LatLng(locationData!.latitude!, locationData!.longitude!),
+          icon: BitmapDescriptor.defaultMarker,
+          infoWindow: InfoWindow(title: 'My Location'));
+    } else {
+      print('=>>>>>Permission Error in gps');
+    }
+    print('done');
+    emit(MapGetUserLocationSuccessState());
+  }
+
+  Future<bool> isPermissionGranted() async {
+    permissionStatus = await location.hasPermission();
+    if (permissionStatus == PermissionStatus.denied) {
+      permissionStatus = await location.requestPermission();
+    }
+    return permissionStatus == PermissionStatus.granted;
+  }
+
+  String address = '';
+
+
+
+  Future<bool> isServiceEnabled() async {
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+    }
+    return serviceEnabled;
+  }
+
+
 }

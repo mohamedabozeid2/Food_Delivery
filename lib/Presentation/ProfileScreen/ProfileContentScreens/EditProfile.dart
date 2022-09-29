@@ -131,12 +131,14 @@ class _EditProfileState extends State<EditProfile> {
                                 FoodLayoutCubit.get(context).updateUserData(
                                     name: userNameController.text,
                                     phoneNumber: '+20${phoneController.text}',
+                                    address: userModel!.address!,
                                     emailAddress: emailController.text,
                                     context: context);
                               } else if ('+20${phoneController.text}' !=
                                   userModel!.phoneNumber) {
                                 FoodLayoutCubit.get(context).updateUserData(
                                     name: userNameController.text,
+                                    address: userModel!.address!,
                                     phoneNumber: '+20${phoneController.text}',
                                     emailAddress: emailController.text,
                                     context: context);

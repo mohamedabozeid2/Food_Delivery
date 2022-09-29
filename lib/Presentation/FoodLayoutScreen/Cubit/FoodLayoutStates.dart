@@ -43,7 +43,9 @@ class FoodLayoutGetUserDataLoadingState extends FoodLayoutStates{}
 class FoodLayoutGetUserDataSuccessState extends FoodLayoutStates{}
 class FoodLayoutGetUserDataErrorState extends FoodLayoutStates{}
 
-
+class MapGetUserLocationLoadingState extends FoodLayoutStates{}
+class MapGetUserLocationSuccessState extends FoodLayoutStates{}
+class MapGetUserLocationErrorState extends FoodLayoutStates{}
 
 
 class FoodVerifyPhoneLoadingState extends FoodLayoutStates{}
