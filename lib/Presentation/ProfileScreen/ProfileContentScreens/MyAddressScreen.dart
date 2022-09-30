@@ -5,6 +5,8 @@ import 'package:food_delivery/Shared/Constants/Constants.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/helper.dart';
+
 class MyAddressScreen extends StatelessWidget {
   const MyAddressScreen({Key? key}) : super(key: key);
 
@@ -13,7 +15,7 @@ class MyAddressScreen extends StatelessWidget {
     return Scaffold(
       appBar: profileContentAppBar(context: context, title: 'my_address'.tr),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.05),
         child: Column(
           children: [
             buildAddressItem(context: context),
@@ -33,7 +35,7 @@ class MyAddressScreen extends StatelessWidget {
   required BuildContext context,
 }){
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.025),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

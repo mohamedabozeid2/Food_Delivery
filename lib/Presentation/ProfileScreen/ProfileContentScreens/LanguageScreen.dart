@@ -6,6 +6,8 @@ import 'package:food_delivery/Shared/Constants/Constants.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/helper.dart';
+
 class ChangeLanguageScreen extends StatefulWidget {
 
   @override
@@ -19,7 +21,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
     return Scaffold(
       appBar: profileContentAppBar(context: context, title: 'change_language'.tr),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.05),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -66,7 +68,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
         });
       },
       child: Container(
-        padding: EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.05),
         decoration: BoxDecoration(
             color: color, borderRadius: BorderRadius.circular(10.0)),
         child: Row(
@@ -80,7 +82,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
             ),
             const Spacer(),
             Container(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.025),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50.0),
                 color: Colors.white,

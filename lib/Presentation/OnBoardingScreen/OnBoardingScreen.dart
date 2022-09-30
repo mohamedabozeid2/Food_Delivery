@@ -39,7 +39,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return Scaffold(
       body: Padding(
         padding:
-        const EdgeInsets.only(top: 50, bottom: 50, left: 20, right: 20),
+         EdgeInsets.only(top: Helper.getScreenWidth(context: context)*0.11, bottom: Helper.getScreenWidth(context: context)*0.11, left: Helper.getScreenWidth(context: context)*0.05, right: Helper.getScreenWidth(context: context)*0.05),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -50,7 +50,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   child: Container(
                       color: Colors.white,
                       child: Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.05),
                         child: Text(
                           'Skip',
                           style: Theme
@@ -103,7 +103,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.025),
               child: defaultButton(text: 'Next',
                   fun: () {
                     if (isLast == true) {
@@ -141,7 +141,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       children: [
         Padding(
           padding:
-          const EdgeInsets.only(top: 40, right: 10, left: 10, bottom: 10),
+           EdgeInsets.only(top: Helper.getScreenWidth(context: context)*0.1, right: Helper.getScreenWidth(context: context)*0.025, left: Helper.getScreenWidth(context: context)*0.025, bottom: Helper.getScreenWidth(context: context)*0.025),
           child: Text(
             textAlign: TextAlign.center,
             title,
@@ -152,7 +152,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 15),
+          padding:  EdgeInsets.symmetric(vertical: Helper.getScreenWidth(context: context)*0.052, horizontal: Helper.getScreenWidth(context: context)*0.04),
           child: Text(
             textAlign: TextAlign.center,
             body,

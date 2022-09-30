@@ -85,7 +85,7 @@ class MapSampleState extends State<MapSample> {
                             Align(
                               alignment: Alignment.topCenter,
                               child: Padding(
-                                padding: const EdgeInsets.all(10.0),
+                                padding:  EdgeInsets.all(Helper.getScreenWidth(context: context)*0.04),
                                 child: Row(
                                   children: [
                                     Expanded(
@@ -111,7 +111,7 @@ class MapSampleState extends State<MapSample> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(12.0),
+                              padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.03),
                               child: Row(
                                 children: [
                                   defaultButton(

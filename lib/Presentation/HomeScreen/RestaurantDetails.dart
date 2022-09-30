@@ -80,8 +80,10 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                        top: 20.0, left: 20.0, right: 20.0),
+                    padding: EdgeInsets.only(
+                        top: Helper.getScreenWidth(context: context) * 0.05,
+                        left: Helper.getScreenWidth(context: context) * 0.05,
+                        right: Helper.getScreenWidth(context: context) * 0.05),
                     child: Column(
                       children: [
                         Row(
@@ -261,8 +263,11 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: 20.0, left: 20.0, bottom: 20.0),
+                      padding: EdgeInsets.only(
+                          right: Helper.getScreenWidth(context: context) * 0.05,
+                          left: Helper.getScreenWidth(context: context) * 0.05,
+                          bottom:
+                              Helper.getScreenWidth(context: context) * 0.05),
                       child: CustomScrollView(
                         slivers: [
                           SliverFillRemaining(
@@ -280,7 +285,7 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                                               children: [
                                                 Container(
                                                     padding:
-                                                        EdgeInsets.all(6.0),
+                                                        EdgeInsets.all(Helper.getScreenWidth(context: context)*0.02),
                                                     decoration: BoxDecoration(
                                                         color: mainColor,
                                                         borderRadius:
@@ -381,7 +386,7 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                                     : Row(
                                         children: [
                                           Container(
-                                              padding: EdgeInsets.all(6.0),
+                                              padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.02),
                                               decoration: BoxDecoration(
                                                   color: mainColor,
                                                   borderRadius:
@@ -448,15 +453,15 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                                   child: ListView.separated(
                                       // shrinkWrap: false,
                                       physics: BouncingScrollPhysics(),
-                                      padding: EdgeInsets.all(5),
+                                      padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.02),
                                       itemBuilder: (context, index) {
                                         return MealBuilder(
                                             model: FoodLayoutCubit.get(context)
                                                     .mealsList[
                                                 widget.restaurantIndex!],
                                             index: index,
-                                            restaurantIndex: widget
-                                                .restaurantIndex!);
+                                            restaurantIndex:
+                                                widget.restaurantIndex!);
                                       },
                                       separatorBuilder: (context, index) {
                                         return const SizedBox(
@@ -481,14 +486,13 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
     );
   }
 
-
   Widget foodCategoriesBuilder(
       {required String text,
       required BuildContext context,
       required int index}) {
     return GestureDetector(
       child: Container(
-        padding: EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.04),
         decoration: BoxDecoration(
             color:
                 FoodLayoutCubit.get(context).foodCategoriesNavBarIndex == index

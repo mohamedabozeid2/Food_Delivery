@@ -3,6 +3,7 @@ import 'package:food_delivery/Shared/styles/Themes.dart';
 import 'package:get/get.dart';
 
 import '../../../Shared/Components/Components.dart';
+import '../../../core/utils/helper.dart';
 
 class AboutUsScreen extends StatelessWidget {
   const AboutUsScreen({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class AboutUsScreen extends StatelessWidget {
       appBar: profileContentAppBar(context: context, title: 'about_us'.tr),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding:  EdgeInsets.all(Helper.getScreenWidth(context: context)*0.05),
           child: Column(
             children: [
               randomTextItemBuilder(
@@ -46,7 +47,7 @@ class AboutUsScreen extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        dotBuilder(),
+        dotBuilder(context: context),
         const SizedBox(
           width: 8.0,
         ),
@@ -62,11 +63,11 @@ class AboutUsScreen extends StatelessWidget {
     );
   }
 
-  Widget dotBuilder() {
+  Widget dotBuilder({required BuildContext context}) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
+      padding:  EdgeInsets.only(top: Helper.getScreenWidth(context: context)*0.025),
       child: Container(
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.0125),
         decoration: BoxDecoration(
             color: mainColor, borderRadius: BorderRadius.circular(10.0)),
       ),

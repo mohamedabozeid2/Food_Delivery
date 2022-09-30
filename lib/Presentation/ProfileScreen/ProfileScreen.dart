@@ -37,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: SizedBox(
               width: Helper.getScreenWidth(context: context) * 0.95,
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.05),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -93,9 +93,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
 
-                    myDivider(color: greyTextColor, paddingVertical: 20),
+                    myDivider(color: greyTextColor, paddingVertical: Helper.getScreenWidth(context: context)*0.05),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding: EdgeInsets.symmetric(vertical: Helper.getScreenWidth(context: context)*0.025),
                       child: settingsItemBuilder(
                           icon: Icons.credit_card,
                           text: 'payment_method'.tr,
@@ -103,7 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           context: context),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding:  EdgeInsets.symmetric(vertical: Helper.getScreenWidth(context: context)*0.025),
                       child: settingsItemBuilder(
                           icon: Icons.location_on,
                           text: 'my_address'.tr,
@@ -111,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           context: context),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding:  EdgeInsets.symmetric(vertical: Helper.getScreenWidth(context: context)*0.025),
                       child: settingsItemBuilder(
                           icon: Icons.language,
                           text: 'change_language'.tr,
@@ -119,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           context: context),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding: EdgeInsets.symmetric(vertical: Helper.getScreenWidth(context: context)*0.025),
                       child: settingsItemBuilder(
                           icon: Icons.info_outline,
                           text: 'about_us'.tr,
@@ -127,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           context: context),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding:  EdgeInsets.symmetric(vertical: Helper.getScreenWidth(context: context)*0.025),
                       child: settingsItemBuilder(
                           icon: Icons.share,
                           text: 'invite_and_share'.tr,

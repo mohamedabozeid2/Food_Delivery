@@ -6,6 +6,7 @@ import 'package:food_delivery/Shared/Constants/Constants.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/helper.dart';
 import '../../FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
 import '../../Otp/Loading.dart';
 
@@ -49,7 +50,7 @@ class _EditProfileState extends State<EditProfile> {
         return Scaffold(
           appBar: profileContentAppBar(context: context, title: 'edit_profile'.tr),
           body: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.05),
             child: Form(
               key: formKey,
               child: SingleChildScrollView(

@@ -58,7 +58,7 @@ class _CartScreenState extends State<CartScreen> {
                     myDivider(color: greyTextColor),
                     Container(
                       width: Helper.getScreenWidth(context: context) * 0.95,
-                      padding: const EdgeInsets.all(20.0),
+                      padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.05),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -153,7 +153,7 @@ class _CartScreenState extends State<CartScreen> {
                                 Helper.getScreenHeight(context: context) *
                                     0.1,
                             padding:
-                                const EdgeInsets.symmetric(vertical: 20.0),
+                                EdgeInsets.symmetric(vertical: Helper.getScreenWidth(context: context)*0.05),
                             child: Row(
                               children: [
                                 Expanded(

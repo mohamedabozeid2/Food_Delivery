@@ -66,7 +66,9 @@ class _MealDetailsState extends State<MealDetails> {
                             child: Image.network(widget.model.image!)),
                         Container(
                           padding: EdgeInsets.all(2.0),
-                          margin: EdgeInsets.only(right: 20),
+                          margin: EdgeInsets.only(
+                              right: Helper.getScreenWidth(context: context) *
+                                  0.05),
                           decoration: BoxDecoration(
                               color: FoodLayoutCubit.get(context)
                                       .favID
@@ -86,14 +88,22 @@ class _MealDetailsState extends State<MealDetails> {
                     ),
                     Expanded(
                       child: Padding(
-                        padding:
-                            const EdgeInsets.only(right: 20, left: 20, top: 20),
+                        padding:  EdgeInsets.only(
+                            right:
+                                Helper.getScreenWidth(context: context) * 0.05,
+                            left:
+                                Helper.getScreenWidth(context: context) * 0.05,
+                            top:
+                                Helper.getScreenWidth(context: context) * 0.05),
                         child: Column(
                           children: [
                             Container(
                               width: Helper.getScreenWidth(context: context) *
                                   0.95,
-                              padding: const EdgeInsets.only(bottom: 20.0),
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      Helper.getScreenWidth(context: context) *
+                                          0.05),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -287,33 +297,39 @@ class _MealDetailsState extends State<MealDetails> {
                       elevation: 10.0,
                       child: Container(
                         height: Helper.getScreenHeight(context: context) * 0.1,
-                        padding: EdgeInsets.all(20.0),
+                        padding: EdgeInsets.all(
+                            Helper.getScreenWidth(context: context) * 0.05),
                         child: Row(
                           children: [
                             Expanded(
-                                child: buttonContainer(fun: (){},color: Colors.white, context: context, child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Total Price',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle2!
-                                            .copyWith(
-                                          fontSize: 14.0,
-                                        ),
+                                child: buttonContainer(
+                                    fun: () {},
+                                    color: Colors.white,
+                                    context: context,
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Total Price',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle2!
+                                                .copyWith(
+                                                  fontSize: 14.0,
+                                                ),
+                                          ),
+                                          Text('${widget.totalPrice}')
+                                        ],
                                       ),
-                                      Text('${widget.totalPrice}')
-                                    ],
-                                  ),
-                                ))),
+                                    ))),
                             const SizedBox(
                               width: 15.0,
                             ),
                             Expanded(
                                 child: buttonContainer(
-                                  color: mainColor,
+                                    color: mainColor,
                                     fun: () {
                                       if (widget.price != 0 &&
                                           widget.quantity != 0) {

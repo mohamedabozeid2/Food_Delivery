@@ -7,6 +7,7 @@ import 'package:food_delivery/Presentation/Otp/Loading.dart';
 
 import '../../Shared/Components/Components.dart';
 import '../../Shared/styles/Themes.dart';
+import '../../core/utils/helper.dart';
 
 class LoginScreen extends StatelessWidget {
   var phoneController = TextEditingController();
@@ -18,7 +19,7 @@ class LoginScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           body: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding:  EdgeInsets.all(Helper.getScreenWidth(context: context)*0.05),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +28,7 @@ class LoginScreen extends StatelessWidget {
                     alignment: Alignment.center,
                     child: logoDisplay(context: context)),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  padding:  EdgeInsets.symmetric(vertical: Helper.getScreenWidth(context: context)*0.025),
                   child: Text(
                     'Enter Your Phone Number',
                     textAlign: TextAlign.start,
@@ -35,7 +36,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  padding: EdgeInsets.symmetric(vertical: Helper.getScreenWidth(context: context)*0.02),
                   child: Text(
                     'we will send a code (via SMS message) to your phone ',
                     textAlign: TextAlign.start,

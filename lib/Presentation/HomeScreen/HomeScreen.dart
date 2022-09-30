@@ -20,9 +20,9 @@ class HomeScreen extends StatelessWidget {
         return Column(
           children: [
             Container(
-              height: Helper.getScreenHeight(context: context) * 0.07,
-              padding: const EdgeInsets.only(
-                left: 20.0,
+              height: Helper.getScreenHeight(context: context) * 0.05,
+              padding: EdgeInsets.only(
+                left: Helper.getScreenWidth(context: context)*0.05,
               ),
               child: Row(
                 children: [
@@ -79,19 +79,21 @@ class HomeScreen extends StatelessWidget {
       required int index}) {
     return GestureDetector(
       child: Container(
-        padding: EdgeInsets.all(20.0),
+        padding: EdgeInsets.symmetric(horizontal: Helper.getScreenWidth(context: context)*0.05),
         decoration: BoxDecoration(
             color: FoodLayoutCubit.get(context).topNavBarCurrentIndex == index
                 ? mainColor
                 : inActiveColor.withOpacity(0.2),
             borderRadius: BorderRadius.circular(10.0)),
-        child: Text(
-          text,
-          style: Theme.of(context).textTheme.subtitle2!.copyWith(
-              color: FoodLayoutCubit.get(context).topNavBarCurrentIndex == index
-                  ? Colors.white
-                  : Color(0xff655E5C),
-              fontSize: 14.0),
+        child: Center(
+          child: Text(
+            text,
+            style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                color: FoodLayoutCubit.get(context).topNavBarCurrentIndex == index
+                    ? Colors.white
+                    : Color(0xff655E5C),
+                fontSize: 14.0),
+          ),
         ),
       ),
       onTap: () {
@@ -117,7 +119,7 @@ class HomeScreen extends StatelessWidget {
             ));
       },
       child: Padding(
-        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+        padding: EdgeInsets.only(left: Helper.getScreenWidth(context: context)*0.05, right: Helper.getScreenWidth(context: context)*0.05),
         child: Row(
           children: [
             Column(
@@ -134,16 +136,18 @@ class HomeScreen extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding:  EdgeInsets.all(Helper.getScreenWidth(context: context)*0.05),
                 child: Column(
                   children: [
                     Row(
                       children: [
-                        Text(
-                          model.name!,
-                          style: Theme.of(context).textTheme.bodyText2,
+                        Expanded(
+                          child: Text(
+                            model.name!,
+                            style: Theme.of(context).textTheme.bodyText2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                        const Spacer(),
                         Icon(
                           Icons.star,
                           color: mainColor,
@@ -165,7 +169,7 @@ class HomeScreen extends StatelessWidget {
                       height: 20.0,
                     ),
                     SizedBox(
-                      height: 20,
+                      height: Helper.getScreenHeight(context: context)*0.028,
                       child: Row(
                         children: [
                           Icon(Icons.restaurant_outlined,
@@ -177,12 +181,15 @@ class HomeScreen extends StatelessWidget {
                             child: ListView.separated(
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
-                                  return Text(
-                                    tagsModel[index].tag!,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle2!
-                                        .copyWith(color: greyTextColor),
+                                  return Container(
+                                    padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.01),
+                                    child: Text(
+                                      tagsModel[index].tag!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle2!
+                                          .copyWith(color: greyTextColor),
+                                    ),
                                   );
                                 },
                                 separatorBuilder: (context, index) {
@@ -239,7 +246,7 @@ class HomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.02),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(color: mainColor)),
@@ -252,7 +259,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.02),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(color: mainColor)),

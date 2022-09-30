@@ -4,6 +4,7 @@ import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubi
 import 'package:food_delivery/Presentation/Otp/Pinput.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
 
+import '../../core/utils/helper.dart';
 import '../FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -38,7 +39,7 @@ class _OtpScreenState extends State<OtpScreen> {
         return Scaffold(
           body: Center(
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(Helper.getScreenWidth(context: context)*0.05),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
