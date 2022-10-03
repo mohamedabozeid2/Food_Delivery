@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +16,7 @@ import 'package:lottie/lottie.dart';
 
 import '../../DataModels/TagsModel.dart';
 import '../../Shared/styles/Themes.dart';
+import '../../core/widgets/adaptive_indicator.dart';
 
 class RestaurantDetails extends StatefulWidget {
   RestaurantModel model;
@@ -63,8 +67,13 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                             width: double.infinity,
                             height:
                                 Helper.getScreenHeight(context: context) * 0.3,
-                            child: Image.network(widget.model.backgroundImage!,
-                                fit: BoxFit.cover),
+                            child: CachedNetworkImage(
+                              imageUrl: "${widget.model.backgroundImage}",
+                              key: UniqueKey(),
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => Center(child: AdaptiveIndicator(os: Platform.operatingSystem, color: mainColor,)),
+                              errorWidget: (context, url, error) => const Icon(Icons.error),
+                            ),
                           ),
                         ),
                         Container(
@@ -74,7 +83,13 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                               color: Colors.green,
                               borderRadius: BorderRadius.circular(10.0)),
                           child:
-                              Image(image: NetworkImage(widget.model.image!)),
+                          CachedNetworkImage(
+                            imageUrl: "${widget.model.image}",
+                            key: UniqueKey(),
+                            // fit: BoxFit.cover,
+                            placeholder: (context, url) => Center(child: AdaptiveIndicator(os: Platform.operatingSystem, color: mainColor,)),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
+                          ),
                         )
                       ],
                     ),

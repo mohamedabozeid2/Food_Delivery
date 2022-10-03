@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/Presentation/FoodLayoutScreen/Cubit/FoodLayoutCubit.dart';
@@ -6,6 +9,7 @@ import '../../../DataModels/MealModel.dart';
 import '../../../Shared/Components/Components.dart';
 import '../../../Shared/styles/Themes.dart';
 import '../../../core/utils/helper.dart';
+import '../../../core/widgets/adaptive_indicator.dart';
 import '../../FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
 import '../MealDetails.dart';
 
@@ -47,9 +51,15 @@ class MealBuilder extends StatelessWidget {
                     clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0)),
-                    child: Image.network(
-                        width: Helper.getScreenWidth(context: context) * 0.37,
-                        '${model[index].image}'),
+                    child: CachedNetworkImage(
+                      imageUrl: "${model[index].image}",
+                      width: Helper.getScreenWidth(context: context) *0.37,
+                      key: UniqueKey(),
+                      // fit: BoxFit.cover,
+                      placeholder: (context, url) => Center(child: AdaptiveIndicator(os: Platform.operatingSystem, color: mainColor,)),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                    ),
+
                   ),
                   const SizedBox(
                     width: 15.0,

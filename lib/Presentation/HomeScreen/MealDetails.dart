@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/DataModels/MealContentModel.dart';
@@ -8,6 +11,7 @@ import 'package:food_delivery/Shared/styles/Themes.dart';
 import 'package:food_delivery/core/utils/helper.dart';
 import 'package:get/get.dart';
 
+import '../../core/widgets/adaptive_indicator.dart';
 import '../FoodLayoutScreen/Cubit/FoodLayoutStates.dart';
 
 class MealDetails extends StatefulWidget {
@@ -63,7 +67,13 @@ class _MealDetailsState extends State<MealDetails> {
                             decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                     bottomRight: Radius.circular(100.0))),
-                            child: Image.network(widget.model.image!)),
+                            child: CachedNetworkImage(
+                              imageUrl: "${widget.model.image}",
+                              key: UniqueKey(),
+                              // fit: BoxFit.cover,
+                              placeholder: (context, url) => Center(child: AdaptiveIndicator(os: Platform.operatingSystem, color: mainColor,)),
+                              errorWidget: (context, url, error) => const Icon(Icons.error),
+                            ),),
                         Container(
                           padding: EdgeInsets.all(2.0),
                           margin: EdgeInsets.only(
@@ -382,12 +392,16 @@ class _MealDetailsState extends State<MealDetails> {
         Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.0)),
-          child: Image.network(
-            model.image!,
-            width: Helper.getScreenWidth(context: context) * 0.3,
+          child: CachedNetworkImage(
+            imageUrl: "${model.image}",
+            key: UniqueKey(),
             fit: BoxFit.cover,
+            width: Helper.getScreenWidth(context: context)* 0.3,
             height: Helper.getScreenHeight(context: context) * 0.1,
+            placeholder: (context, url) => Center(child: AdaptiveIndicator(os: Platform.operatingSystem, color: mainColor,)),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
+          
         ),
         const SizedBox(
           width: 15.0,

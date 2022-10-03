@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/DataModels/RestaurantModel.dart';
@@ -8,6 +11,7 @@ import 'package:food_delivery/Presentation/HomeScreen/RestaurantDetails.dart';
 import 'package:food_delivery/Shared/Components/Components.dart';
 import 'package:food_delivery/Shared/styles/Themes.dart';
 import 'package:food_delivery/core/utils/helper.dart';
+import 'package:food_delivery/core/widgets/adaptive_indicator.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -130,7 +134,13 @@ class HomeScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: Image.network(model.image!),
+                  child: CachedNetworkImage(
+                    imageUrl: "${model.image}",
+                    key: UniqueKey(),
+                    // fit: BoxFit.cover,
+                    placeholder: (context, url) => Center(child: AdaptiveIndicator(os: Platform.operatingSystem, color: mainColor,)),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                  ),
                 )
               ],
             ),
