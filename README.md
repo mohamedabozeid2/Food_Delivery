@@ -1,9 +1,6 @@
 # Food Delivery
 
-It is an application that displays the restaurants around you so you can see their menu 
-and choose your favorite meal; you can attach the address for delivery from our map or 
-your current address; it provides you the possibility to edit your address and other 
-personal information anytime from the profile screen.
+It is an application that displays the restaurants around you so you can see their menu and choose your favourite meal; you can attach the address for delivery from our map or your current address; it provides you with the possibility to edit your address and other personal information anytime from the profile screen.
 
 ![screen_1](https://user-images.githubusercontent.com/52718382/229700859-2dc967cc-af93-41e8-b2ab-db19a76cd402.png)
 
